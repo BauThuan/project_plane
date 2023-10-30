@@ -1,0 +1,27 @@
+.introduce_container {
+  width: 100%;
+  font-family: var(--primary-family);
+  font-size: var(--primary-size);
+  .introduce_content {
+    width: 80%;
+    margin: 3% auto;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .introduce-plane {
+      width: 30%;
+      display: flex;
+      justify-content: space-between;
+      .icon {
+        width: 20%;
+        font-size: 1.5rem;
+      }
+      p {
+        width: 80%;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

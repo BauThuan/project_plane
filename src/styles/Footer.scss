@@ -1,0 +1,28 @@
+.footer_container {
+  font-family: var(--primary-family);
+  font-size: var(--primary-size);
+  width: 100%;
+  background-color: #111236;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .footer_content {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    width: 80%;
+    color: #ffffff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    .footer_start {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer_end {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

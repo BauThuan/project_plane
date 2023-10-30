@@ -1,0 +1,35 @@
+.listTicket_container {
+  width: 100%;
+  font-family: var(--primary-family);
+  font-size: var(--primary-size);
+  .listTicket_content {
+    width: 80%;
+    margin: 0 auto;
+    h1 {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+    p {
+      font-size: 0.9rem;
+    }
+    .show_list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      div {
+        width: calc(33.333% - 10px);
+        margin-bottom: 10px;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px #cccccc;
+        img {
+          width: 100%;
+          height: 150px;
+          object-fit: cover;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+  }
+}
