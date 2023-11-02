@@ -10,3 +10,16 @@ export const LanguageVN = (data) => {
     payload: data,
   };
 };
+export const LogIn = (data) => {
+  return {
+    type: "LogIn",
+    payload: data,
+  };
+};
+
+export const LogOut = (data) => {
+  return {
+    type: "LogOut",
+    payload: data,
+  };
+};

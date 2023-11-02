@@ -1,5 +1,6 @@
 const initState = {
   languageEN: false,
+  isLogIn: false,
 };
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
@@ -12,6 +13,16 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         languageEN: false,
+      };
+    case "LogIn":
+      return {
+        ...state,
+        isLogIn: true,
+      };
+    case "LogOut":
+      return {
+        ...state,
+        isLogIn: false,
       };
     default:
       return state;

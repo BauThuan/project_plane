@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
 import ModalCancel from "../Modal/ModalCancel";
+import { toast } from "react-toastify";
 import "../../styles/InformationUser.scss";
 import "../../styles/root.scss";
-import { toast } from "react-toastify";
 
 const InformationUser = () => {
   const navigate = useNavigate();
@@ -144,6 +142,7 @@ const InformationUser = () => {
         ? "Updated personal information successfully!"
         : "Cập nhật thông tin cá nhân thành công !"
     );
+    navigate("/home/profile-user");
   };
   return (
     <div className="information_container">

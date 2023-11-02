@@ -7,9 +7,11 @@ import {
 } from "react-icons/ai";
 import { CgAirplane } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import "../../styles/root.scss";
 import "../../styles/ResultListOfFlight.scss";
 const ResultListOfFlight = () => {
+  const languageEN = useSelector((state) => state.languageEN);
   const navigate = useNavigate();
   const datafake = [
     {
@@ -144,7 +146,7 @@ const ResultListOfFlight = () => {
                       className="confirm"
                       onClick={handleNavigateFlightDetials}
                     >
-                      Chọn <AiOutlineArrowRight />
+                      {languageEN ? "Select" : "Chọn"} <AiOutlineArrowRight />
                     </p>
                   </div>
                 </div>

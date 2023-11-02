@@ -4,7 +4,10 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { LogIn } from "../Redux/Action";
 const Login = () => {
+  const dispatch = useDispatch();
   const languageEN = useSelector((state) => state.languageEN);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -56,8 +59,13 @@ const Login = () => {
     //       : "Tài khoản hoặc mật khẩu không chính xác !"
     //   );
     // }
-    if (email === "admin" && password === "1") {
-      navigate("/information-user");
+    if (email === "1" && password === "1") {
+      toast.success(
+        languageEN ? "Logged in successfully !" : "Đăng nhập thành công !"
+      );
+      // navigate("/information-user");
+      navigate("/home/page");
+      dispatch(LogIn());
     }
   };
 

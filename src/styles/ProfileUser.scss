@@ -1,0 +1,106 @@
+.profile_container {
+  font-size: var(--primary-size);
+  font-family: var(--primary-family);
+  width: 100%;
+  .profile_content {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 0px;
+    &--left {
+      width: 30%;
+      .profile_account {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        padding: 20px 0px;
+        cursor: pointer;
+        .icon_text {
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .margin_icon {
+            margin-right: 10px;
+          }
+        }
+        div {
+          font-size: 1rem;
+        }
+      }
+      .logout {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+          font-size: 1rem;
+          border: none;
+          padding: 8px 30px;
+          border-radius: 10px;
+          background-color: #252abd;
+          color: #ffffff;
+          &:active {
+            box-shadow: 0px 0px 3px #080808;
+          }
+        }
+      }
+    }
+    &--right {
+      width: 60%;
+      div {
+        h1 {
+          text-align: center;
+          font-weight: 600;
+          font-size: 1.5rem;
+        }
+        .information_user {
+          p {
+            font-size: 1rem;
+          }
+          button {
+            font-size: 1rem;
+            border-radius: 10px;
+            border: none;
+            background-color: #252abd;
+            padding: 5px 30px;
+            color: #ffffff;
+            &:active {
+              box-shadow: 0px 0px 3px #080808;
+            }
+          }
+          thead {
+            tr {
+              th {
+                font-size: 0.8rem;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 0.8rem;
+              }
+            }
+          }
+        }
+        .button_delete {
+          margin-top: 10px;
+          font-size: 1rem;
+          background-color: #252abd;
+          color: #ffffff;
+          border: none;
+          padding: 8px 30px;
+          border-radius: 10px;
+          &:active {
+            box-shadow: 0px 0px 3px #080808;
+          }
+        }
+      }
+    }
+  }
+}

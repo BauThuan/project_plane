@@ -8,15 +8,17 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { LanguageEN, LanguageVN } from "../components/Redux/Action";
 import { Link } from "react-router-dom";
 import bg from "../image/logo.png";
+import { LogOut } from "../components/Redux/Action";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/root.scss";
 import "../styles/Header.scss";
+import { toast } from "react-toastify";
 
-const Header = (props) => {
+const Header = () => {
   const dispatch = useDispatch();
   const languageEN = useSelector((state) => state.languageEN);
+  const isLogIn = useSelector((state) => state.isLogIn);
   console.log(">>> check data", languageEN);
-  const { loginSuccess } = props;
   const handleChangeLanguage = (type) => {
     if (type === "VN") {
       dispatch(LanguageVN());
@@ -25,13 +27,19 @@ const Header = (props) => {
       dispatch(LanguageEN());
     }
   };
+  const handleLogOut = () => {
+    toast.success(
+      languageEN ? "Successfully logged out!" : "Đăng xuất thành công !"
+    );
+    dispatch(LogOut());
+  };
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
       bg="light"
       data-bs-theme="light"
-      className="bg-body-tertiary header_container z-0"
+      className="bg-body-tertiary header_container z-2"
     >
       <Container>
         <Navbar.Brand href="#home">
@@ -61,14 +69,26 @@ const Header = (props) => {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link>
-              {loginSuccess ? (
+              {isLogIn ? (
                 <NavDropdown
                   title="thuan@gmail.com"
                   id="collapsible-nav-dropdown"
                   className="text-decoration-none text_color"
                 >
                   <NavDropdown.Item>
-                    <Link className="text-decoration-none" to="/">
+                    <Link
+                      className="text-decoration-none"
+                      to="/home/profile-user"
+                    >
+                      {languageEN ? "Profile User" : "Thông tin cá nhân"}
+                    </Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link
+                      onClick={handleLogOut}
+                      className="text-decoration-none"
+                      to="/"
+                    >
                       {languageEN ? "Logout" : "Đăng xuất"}
                     </Link>
                   </NavDropdown.Item>
