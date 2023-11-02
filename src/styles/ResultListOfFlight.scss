@@ -1,0 +1,161 @@
+.result_container {
+  width: 100%;
+  font-size: var(--primary-size);
+  font-family: var(--primary-family);
+  .result_content {
+    width: 80%;
+    margin: 4% auto 10px;
+
+    .menu {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: #05203c;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      align-items: center;
+      border-radius: 15px;
+      .search {
+        background-color: #0062e3;
+        color: #ffffff;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:active {
+          box-shadow: 0px 0px 5px #ffffff;
+          border-radius: 5px;
+        }
+      }
+      .list_data {
+        color: #ffffff;
+        font-size: 1rem;
+        display: flex;
+        flex-direction: column;
+        line-height: 1rem;
+        .name_city {
+          display: flex;
+        }
+        .traveler_cabin {
+        }
+      }
+      .date {
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        .icon_size {
+          font-size: 1rem;
+        }
+      }
+    }
+    .result {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .details_result {
+        border-radius: 15px;
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+        box-shadow: 0px 0px 3px #cccccc;
+        display: flex;
+        align-items: center;
+        height: auto;
+        cursor: pointer;
+        &--left {
+          width: 70%;
+          border-right: 1px solid #ccc;
+          height: auto;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          .image-logo-form {
+            width: 20%;
+            .image-logo {
+              width: 100px;
+              height: 40px;
+              background-size: cover;
+            }
+          }
+          .time_plane {
+            width: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .address_start {
+              line-height: 0.4rem;
+              p {
+                font-size: 1rem;
+                color: #545860;
+                line-height: 1rem;
+              }
+            }
+            .line {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              line-height: 0px;
+              width: 40%;
+              .total_time {
+                color: #545860;
+              }
+              div {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                .line_address {
+                  width: 100%;
+                  border: 1px solid #545860;
+                  border-radius: 10px;
+                }
+                .icon_plane {
+                  font-size: 1.5rem;
+                  .icon_plane-child {
+                    font-size: 1rem;
+                    color: #545860;
+                  }
+                }
+              }
+              .status {
+                color: #0c838a;
+              }
+            }
+            .address_end {
+              line-height: 0.4rem;
+              p {
+                font-size: 1rem;
+                color: #545860;
+                line-height: 1rem;
+              }
+            }
+          }
+        }
+        &--right {
+          width: 30%;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          p {
+            font-size: 1.2rem;
+            font-weight: 600;
+          }
+          .confirm {
+            font-size: 1rem;
+            background-color: #05203c;
+            color: #ffffff;
+            padding: 5px 15px;
+            border-radius: 10px;
+            &:active {
+              box-shadow: 0px 0px 5px #05203c;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import "../../styles/ModalSelectPeople.scss";
 function ModalSelectPeople(props) {
+  const languageEN = useSelector((state) => state.languageEN);
   const {
     show,
     handle,
@@ -48,13 +50,17 @@ function ModalSelectPeople(props) {
     <>
       <Modal show={show} onHide={handle}>
         <Modal.Header closeButton>
-          <Modal.Title>Du khách và hạng khoang</Modal.Title>
+          <Modal.Title>
+            {languageEN
+              ? "Travelers and cabin class"
+              : "Du khách và hạng khoang"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="modal_coantainer container">
             <div className="modal_content row">
               <div className="modal_describe col-12">
-                <label>Hạng khoang</label>
+                <label>{languageEN ? "Cabin class" : "Hạng Khoang"}</label>
                 <select
                   style={{ cursor: "pointer" }}
                   class="form-select"
@@ -62,14 +68,30 @@ function ModalSelectPeople(props) {
                   value={listTravelersCabin.cabin}
                   onChange={(event) => handleOnChange("cabin", event)}
                 >
-                  <option value="Phổ thông">Phổ thông</option>
-                  <option value="Phổ thông đặc biệt">Phổ thông đặc biệt</option>
-                  <option value="Thương gia">Thương gia</option>
-                  <option value="Hạng nhất">Hạng nhất</option>
+                  <option value={languageEN ? "Common" : "Phổ thông"}>
+                    {languageEN ? "Common" : "Phổ thông"}
+                  </option>
+                  <option
+                    value={
+                      languageEN ? "Special universal" : "Phổ thông đặc biệt"
+                    }
+                  >
+                    {languageEN ? "Special universal" : "Phổ thông đặc biệt"}
+                  </option>
+                  <option value={languageEN ? "Trader" : "Thương gia"}>
+                    {languageEN ? "Trader" : "Thương gia"}
+                  </option>
+                  <option value={languageEN ? "First class" : "Hạng nhất"}>
+                    {languageEN ? "First class" : "Hạng nhất"}
+                  </option>
                 </select>
               </div>
               <div className="col-6 mt-3">
-                <label>Nhiều người lớn (16+ tuổi)</label>
+                <label>
+                  {languageEN
+                    ? "Many adults (16+ years old)"
+                    : "Nhiều người lớn (16+ tuổi)"}
+                </label>
                 <select
                   style={{ cursor: "pointer" }}
                   class="form-select"
@@ -90,7 +112,11 @@ function ModalSelectPeople(props) {
                 </select>
               </div>
               <div className="col-6 mt-3">
-                <label>Nhiều trẻ em (0-15 tuổi)</label>
+                <label>
+                  {languageEN
+                    ? "Many children (0-15 old)"
+                    : "Nhiều trẻ em (0-15 tuổi)"}
+                </label>
                 <select
                   style={{ cursor: "pointer" }}
                   class="form-select"

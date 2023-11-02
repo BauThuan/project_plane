@@ -1,0 +1,148 @@
+.information_container {
+  width: 100%;
+  font-size: var(--primary-size);
+  font-family: var(--primary-family);
+  background-image: url(https://xdcs.cdnchinhphu.vn/446259493575335936/2023/8/23/dhxd-1692750442833376701747.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  .information_content {
+    width: 40%;
+    margin: 0 auto;
+    height: auto;
+    padding: 10px 0px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px #171616;
+    backdrop-filter: blur(500px);
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .input_firstName {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_lastName {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_brithday {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_address {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_email {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_phone {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .input_identification {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      input {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
+    }
+    .confirm {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      button {
+        border: none;
+        padding: 10px 40px;
+        font-size: 0.8rem;
+        background-color: #101bad;
+        border-radius: 10px;
+        color: #ffffff;
+        &:active {
+          box-shadow: 0px 0px 3px #171616;
+        }
+      }
+    }
+  }
+}

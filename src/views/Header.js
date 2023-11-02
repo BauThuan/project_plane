@@ -3,6 +3,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { LanguageEN, LanguageVN } from "../components/Redux/Action";
 import { Link } from "react-router-dom";
 import bg from "../image/logo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +13,18 @@ import "../styles/root.scss";
 import "../styles/Header.scss";
 
 const Header = (props) => {
+  const dispatch = useDispatch();
+  const languageEN = useSelector((state) => state.languageEN);
+  console.log(">>> check data", languageEN);
   const { loginSuccess } = props;
+  const handleChangeLanguage = (type) => {
+    if (type === "VN") {
+      dispatch(LanguageVN());
+    }
+    if (type === "EN") {
+      dispatch(LanguageEN());
+    }
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -21,8 +35,8 @@ const Header = (props) => {
     >
       <Container>
         <Navbar.Brand href="#home">
-          <Link to="" className="text-decoration-none">
-            <img className="logo" src={bg} />
+          <Link to="/home/page" className="text-decoration-none">
+            <img className="logo" src={bg} alt="logo" />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -30,8 +44,8 @@ const Header = (props) => {
           <Nav className="me-auto"></Nav>
           <Nav>
             <Nav.Link>
-              <Link to="" className="text-decoration-none">
-                Trợ giúp
+              <Link to="/home/help" className="text-decoration-none">
+                {languageEN ? "Help" : "Trợ giúp"}
               </Link>
             </Nav.Link>
             <NavDropdown
@@ -39,8 +53,12 @@ const Header = (props) => {
               title="Language"
               id="collapsible-nav-dropdown"
             >
-              <NavDropdown.Item>Vietnamese</NavDropdown.Item>
-              <NavDropdown.Item>English</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => handleChangeLanguage("VN")}>
+                Vietnamese
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => handleChangeLanguage("EN")}>
+                English
+              </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link>
               {loginSuccess ? (
@@ -51,13 +69,13 @@ const Header = (props) => {
                 >
                   <NavDropdown.Item>
                     <Link className="text-decoration-none" to="/">
-                      Logout
+                      {languageEN ? "Logout" : "Đăng xuất"}
                     </Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <Link to="/login" className="text-decoration-none text_color">
-                  Đăng Nhập
+                  {languageEN ? "Log in" : "Đăng nhập"}
                 </Link>
               )}
             </Nav.Link>

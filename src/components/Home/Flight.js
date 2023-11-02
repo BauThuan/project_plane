@@ -8,11 +8,15 @@ import {
 } from "react-icons/ai";
 import { BiPlus, BiErrorAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import ModalSelectPeople from "../Modal/ModalSelectPeople";
 import "../../styles/root.scss";
 import "../../styles/Flight.scss";
 
 const Flight = () => {
+  const navigate = useNavigate();
+  const languageEN = useSelector((state) => state.languageEN);
   const [checkRadio, setCheckRadio] = useState("Khứ hồi");
   const [selectedOption, setSelectedOption] = useState("Phổ thông");
   const [checkBox, setCheckBox] = useState({
@@ -132,14 +136,22 @@ const Flight = () => {
       setErrorTimeColor(true);
     }
     if (isFromValid !== -1 && isArriveValid !== -1 && isTimeValid !== -1) {
-      toast.error(`Vui lòng điền đầy đủ thông tin dòng số ${isFromValid + 1}`);
+      toast.error(
+        languageEN
+          ? `Please fill in the information in line number ${isFromValid + 1}`
+          : `Vui lòng điền đầy đủ thông tin dòng số ${isFromValid + 1}`
+      );
     }
   };
 
   const handleShowModal = (type) => {
     if (type === "ShowProvice") {
       if (listAddNewPlane.length === 0) {
-        toast.error("Vui lòng thêm mới và chọn địa điểm để mua vé trước !");
+        toast.error(
+          languageEN
+            ? "Please add a new one and select a location to buy tickets in advance!"
+            : "Vui lòng thêm mới và chọn địa điểm để mua vé trước !"
+        );
         return;
       }
       setShowModal(true);
@@ -160,14 +172,22 @@ const Flight = () => {
       if (numberOfAdults <= 9) {
         setNumberOfAdults(numberOfAdults + 1);
       } else {
-        toast.error("Tối đa chỉ có thể đăng ký 10 người !");
+        toast.error(
+          languageEN
+            ? "Maximum can only register 10 people!"
+            : "Tối đa chỉ có thể đăng ký 10 người !"
+        );
       }
     }
     if (type === "children") {
       if (numberOfChildren <= 4) {
         setNumberOfChildren(numberOfChildren + 1);
       } else {
-        toast.error("Tối đa chỉ có thể đăng ký 5 bé !");
+        toast.error(
+          languageEN
+            ? "Maximum can only register 5 children!"
+            : "Tối đa chỉ có thể đăng ký 5 bé !"
+        );
       }
     }
   };
@@ -192,7 +212,9 @@ const Flight = () => {
       };
       setListAddNewPlane(newListAddNew);
     }
-    toast.success("Lựa chọn thành công !");
+    toast.success(
+      languageEN ? "Choose successfully!" : "Lựa chọn thành công !"
+    );
     setShowModal(false);
   };
 
@@ -204,7 +226,7 @@ const Flight = () => {
         setProvice(res.data);
       }
     } catch (error) {
-      toast.error("Thất bại !");
+      toast.error(languageEN ? "Fail" : "Thất bại !");
     }
   };
 
@@ -224,36 +246,53 @@ const Flight = () => {
 
   const handleSearchRoundWay = (type) => {
     if (type === "Khứ hồi") {
-      let {
-        addressStart,
-        addressEnd,
-        startTime,
-        endTime,
-        adult,
-        children,
-        cabin,
-      } = listRoundTrip;
+      let { addressStart, addressEnd, startTime, endTime } = listRoundTrip;
       if (!addressStart.trim()) {
-        toast.error("Vui lòng chọn lại điểm bắt đầu !");
+        toast.error(
+          languageEN
+            ? "Please choose your starting point again!"
+            : "Vui lòng chọn lại điểm bắt đầu !"
+        );
         return;
       }
       if (!addressEnd.trim()) {
-        toast.error("Vui lòng chọn lại điểm kết thúc !");
+        toast.error(
+          languageEN
+            ? "Please select the ending point again!"
+            : "Vui lòng chọn lại điểm kết thúc !"
+        );
         return;
       }
       if (!startTime.trim()) {
-        toast.error("Vui lòng chọn thời gian bắt đầu !");
+        toast.error(
+          languageEN
+            ? "Please select a start time!"
+            : "Vui lòng chọn thời gian bắt đầu !"
+        );
         return;
       }
       if (!endTime.trim()) {
-        toast.error("Vui lòng chọn thời gian kết thúc !");
+        toast.error(
+          languageEN
+            ? "Please select an end time!"
+            : "Vui lòng chọn thời gian kết thúc !"
+        );
+        return;
       }
       if (addressStart === addressEnd) {
-        toast.error("Điểm đi phải khác điểm đến !");
+        toast.error(
+          languageEN
+            ? "The departure point must be different from the destination!"
+            : "Điểm đi phải khác điểm đến !"
+        );
         return;
       }
       if (numberOfAdults === 0 || numberOfChildren === 0) {
-        toast.error("Vui lòng chọn đầy đủ Du khách và hạng khoang !");
+        toast.error(
+          languageEN
+            ? "Please select all travelers and cabin class!"
+            : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
+        );
         return;
       }
       setListRoundTrip({
@@ -262,29 +301,53 @@ const Flight = () => {
         children: numberOfChildren,
         cabin: selectedOption,
       });
-      toast.success("Chọn địa điểm thành công !");
+      toast.success(
+        languageEN
+          ? "Choose a successful location!"
+          : "Chọn địa điểm thành công !"
+      );
+      navigate("/home/list-of-flight");
     }
     if (type === "Một chiều") {
-      let { addressStart, addressEnd, startTime, adult, children, cabin } =
-        listOneWay;
+      let { addressStart, addressEnd, startTime } = listOneWay;
       if (!addressStart.trim()) {
-        toast.error("Vui lòng chọn lại địa điểm xuất phát !");
+        toast.error(
+          languageEN
+            ? "Please select your starting location again!"
+            : "Vui lòng chọn lại địa điểm xuất phát !"
+        );
         return;
       }
       if (!addressEnd.trim()) {
-        toast.error("Vui lòng chọn lại địa điểm bắt đầu !");
+        toast.error(
+          languageEN
+            ? "Please select the starting location again!"
+            : "Vui lòng chọn lại địa điểm bắt đầu !"
+        );
         return;
       }
       if (!startTime.trim()) {
-        toast.error("Vui lòng chọn thời gian bắt đầu !");
+        toast.error(
+          languageEN
+            ? "Please select a start time!"
+            : "Vui lòng chọn thời gian bắt đầu !"
+        );
         return;
       }
       if (numberOfAdults === 0 || numberOfChildren === 0) {
-        toast.error("Vui lòng chọn đầy đủ Du khách và hạng khoang !");
+        toast.error(
+          languageEN
+            ? "Please select all travelers and cabin class!"
+            : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
+        );
         return;
       }
       if (addressStart === addressEnd) {
-        toast.error("Điểm đi phải khác điểm đến !");
+        toast.error(
+          languageEN
+            ? "The departure point must be different from the destination!"
+            : "Điểm đi phải khác điểm đến !"
+        );
         return;
       }
 
@@ -294,7 +357,11 @@ const Flight = () => {
         children: numberOfChildren,
         cabin: selectedOption,
       });
-      toast.success("Chọn địa điểm thành công !");
+      toast.success(
+        languageEN
+          ? "Choose a successful location!"
+          : "Chọn địa điểm thành công !"
+      );
     }
   };
 
@@ -330,7 +397,11 @@ const Flight = () => {
     <div className="flight_container">
       <div className="flight_container--content">
         <div className="title--plane">
-          <h1>Vé máy bay giá rẻ nhất đi muôn nơi, từ bất kỳ đâu</h1>
+          <h1>
+            {languageEN
+              ? "Cheapest airfare to anywhere, from anywhere"
+              : "Vé máy bay giá rẻ nhất đi muôn nơi, từ bất kỳ đâu"}
+          </h1>
         </div>
         <div className="flight--selection">
           <div className="flight--btn">
@@ -341,7 +412,7 @@ const Flight = () => {
                 checked={checkRadio === "Khứ hồi" ? true : false}
                 name="option"
               />
-              Khứ hồi
+              {languageEN ? "Round trip" : " Khứ hồi"}
             </label>
             <label className="flight--btn--title">
               <input
@@ -350,7 +421,8 @@ const Flight = () => {
                 type="radio"
                 name="option"
               />
-              Một chiều
+
+              {languageEN ? "One way" : "Một chiều"}
             </label>
             <label className="flight--btn--title">
               <input
@@ -359,7 +431,8 @@ const Flight = () => {
                 type="radio"
                 name="option"
               />
-              Nhiều thành phố
+
+              {languageEN ? "Many cities" : "Nhiều thành phố"}
             </label>
           </div>
 
@@ -367,7 +440,7 @@ const Flight = () => {
             <div className="select--flight--type">
               <div className="flight--type--title">
                 <div className="input_option">
-                  <span>Từ</span>
+                  <span>{languageEN ? "From" : "Từ"}</span>
                   <select
                     onChange={(event) => handleOnChange("addressStart", event)}
                   >
@@ -379,7 +452,7 @@ const Flight = () => {
                   </select>
                 </div>
                 <div className="input_option">
-                  <span>Đến</span>
+                  <span>{languageEN ? "Arrive" : "Đến"}</span>
                   <select
                     onChange={(event) => handleOnChange("addressEnd", event)}
                   >
@@ -395,7 +468,7 @@ const Flight = () => {
                   </select>
                 </div>
                 <div className="input_option">
-                  <span>Khởi hành</span>
+                  <span>{languageEN ? "Start" : "Khởi hành"}</span>
                   <input
                     onChange={(event) => handleOnChange("startTime", event)}
                     type="date"
@@ -408,7 +481,7 @@ const Flight = () => {
                 </div>
                 {checkRadio === "Khứ hồi" ? (
                   <div className="input_option">
-                    <span>Về</span>
+                    <span>{languageEN ? "About" : "Về"}</span>
                     <input
                       onChange={(event) => handleOnChange("endTime", event)}
                       type="date"
@@ -417,7 +490,7 @@ const Flight = () => {
                   </div>
                 ) : (
                   <div className="input_option cursor_not">
-                    <span>Về</span>
+                    <span>{languageEN ? "About" : "Về"}</span>
                     <input disabled={checkRadio === "Một chiều"} type="date" />
                   </div>
                 )}
@@ -425,12 +498,18 @@ const Flight = () => {
                   onClick={() => handleShowModal("ShowRound")}
                   className="input_option"
                 >
-                  <span>Du khách và hạng khoang</span>
+                  <span>
+                    {languageEN
+                      ? "Travelers and cabin class"
+                      : "Du khách và hạng khoang"}
+                  </span>
                   <div
                     className="input_render"
                     onClick={handleShowModalSelectPeople}
                   >
-                    {`${numberOfAdults} nguời lớn, ${numberOfChildren} trẻ em, ${selectedOption}`}
+                    {languageEN
+                      ? `${numberOfAdults} adults, ${numberOfChildren} children, ${selectedOption}`
+                      : `${numberOfAdults} nguời lớn, ${numberOfChildren} trẻ em, ${selectedOption}`}
                   </div>
                 </div>
               </div>
@@ -442,7 +521,9 @@ const Flight = () => {
                       onClick={() => handleCheckBoxIsTrue("checkA")}
                       checked={checkBox.checkA}
                     />
-                    Thêm các sân bay gần đây
+                    {languageEN
+                      ? "More recent airports"
+                      : "Thêm các sân bay gần đây"}
                   </label>
                   <label className="option--end">
                     <input
@@ -450,7 +531,9 @@ const Flight = () => {
                       onClick={() => handleCheckBoxIsTrue("checkB")}
                       checked={checkBox.checkB}
                     />
-                    Thêm các sân bay gần đây nhất
+                    {languageEN
+                      ? "More recent airports"
+                      : "Thêm các sân bay gần đây nhất"}
                   </label>
                 </div>
                 <div className="checkBox--option">
@@ -460,10 +543,13 @@ const Flight = () => {
                       onClick={() => handleCheckBoxIsTrue("checkC")}
                       checked={checkBox.checkC}
                     />
-                    Chỉ các chuyến bay thẳng
+                    {languageEN
+                      ? "Direct flights only"
+                      : "Chỉ các chuyến bay thẳng"}
                   </label>
                   <button onClick={() => handleSearchRoundWay(`${checkRadio}`)}>
-                    Tìm kiếm chuyến bay <AiOutlineArrowRight />
+                    {languageEN ? "Search for flights" : "Tìm kiếm chuyến bay"}{" "}
+                    <AiOutlineArrowRight />
                   </button>
                 </div>
               </div>
@@ -484,7 +570,9 @@ const Flight = () => {
                           handleOnChangeNew("from", event, index)
                         }
                         type="text"
-                        placeholder="Từ (VD: Hà Nội)"
+                        placeholder={
+                          languageEN ? "From (eg: Ha Noi)" : "Từ (VD: Hà Nội)"
+                        }
                       />
 
                       <AiFillCaretRight className="icon--plane" />
@@ -498,7 +586,11 @@ const Flight = () => {
                           handleOnChangeNew("arrive", event, index)
                         }
                         type="text"
-                        placeholder="Đến (VD: Đà Nẵng)"
+                        placeholder={
+                          languageEN
+                            ? "Arrive (eg: Da Nang)"
+                            : "Đến (VD: Đà Nẵng)"
+                        }
                         value={item.arrive}
                       />
                       <input
@@ -516,7 +608,7 @@ const Flight = () => {
                         }
                         value={item.startTime}
                         type={start === `date start${index}` ? "date" : "text"}
-                        placeholder="Khởi hành"
+                        placeholder={languageEN ? "Start" : "Khởi hành"}
                       />
                       <AiOutlineClose
                         onClick={() => handleDeleteNewPlane(index)}
@@ -541,7 +633,9 @@ const Flight = () => {
                 <div className="multiple--cities--add">
                   <span onClick={handleAddNewFlight}>
                     <BiPlus />
-                    Thêm chuyến bay khác (tối đa 5 chuyến)
+                    {languageEN
+                      ? "Add more flights (maximum 5 flights)"
+                      : "Thêm chuyến bay khác (tối đa 5 chuyến)"}
                   </span>
                 </div>
               )}
@@ -550,41 +644,61 @@ const Flight = () => {
                   onClick={() => handleShowModal("ShowProvice")}
                   className="option--age"
                 >
-                  {`${numberOfAdults} nguời lớn, ${numberOfChildren} trẻ em, ${selectedOption}`}
+                  {languageEN
+                    ? `${numberOfAdults} adults, ${numberOfChildren} children, ${selectedOption}`
+                    : `${numberOfAdults} nguời lớn, ${numberOfChildren} trẻ em, ${selectedOption}`}
                   <AiOutlineCaretDown />
                 </div>
                 {showModal && (
                   <div className="option--modal">
                     <div>
                       <div className="cabin--class">
-                        <p>Hạng Khoang</p>
+                        <p>{languageEN ? "Cabin class" : "Hạng Khoang"}</p>
                         <select
                           value={selectedOption}
                           onChange={(event) => {
                             setSelectedOption(event.target.value);
                           }}
                         >
-                          <option value="Phổ thông">Phổ thông</option>
-                          <option value="Phổ thông đặc biệt">
-                            Phổ thông đặc biệt
+                          <option value={languageEN ? "Common" : "Phổ thông"}>
+                            {languageEN ? "Common" : "Phổ thông"}
                           </option>
-                          <option value="Thương gia">Thương gia</option>
-                          <option value="Hạng nhất">Hạng nhất</option>
+                          <option
+                            value={
+                              languageEN
+                                ? "Special universal"
+                                : "Phổ thông đặc biệt"
+                            }
+                          >
+                            {languageEN
+                              ? "Special universal"
+                              : "Phổ thông đặc biệt"}
+                          </option>
+                          <option value={languageEN ? "Trader" : "Thương gia"}>
+                            {languageEN ? "Trader" : "Thương gia"}
+                          </option>
+                          <option
+                            value={languageEN ? "First class" : "Hạng nhất"}
+                          >
+                            {languageEN ? "First class" : "Hạng nhất"}
+                          </option>
                         </select>
                       </div>
                       <div className="adults">
-                        <p>Nhiều người lớn</p>
+                        <p>{languageEN ? "Many adults" : "Nhiều người lớn"}</p>
                         <div>
                           <span onClick={() => handleReduce("adults")}>-</span>
                           <span className="quantity">{numberOfAdults}</span>
                           <span onClick={() => handleIncrease("adults")}>
                             +
                           </span>
-                          <span className="age">16+ tuổi</span>
+                          <span className="age">
+                            {languageEN ? "16+ years old" : "16+ tuổi"}
+                          </span>
                         </div>
                       </div>
                       <div className="children">
-                        <p>Nhiều trẻ em</p>
+                        <p>{languageEN ? "Many children" : "Nhiều trẻ em"}</p>
                         <div>
                           <span onClick={() => handleReduce("children")}>
                             -
@@ -593,31 +707,38 @@ const Flight = () => {
                           <span onClick={() => handleIncrease("children")}>
                             +
                           </span>
-                          <span className="age">0-15 tuổi</span>
+                          <span className="age">
+                            {languageEN ? "0-15 years old" : "0-15 tuổi"}
+                          </span>
                         </div>
                       </div>
                       <div className="text-instruct">
                         <p>
-                          Tuổi của bạn khi đi du lịch phải hợp lệ đối với nhóm
-                          tuổi đã đặt vé. Các hãng hàng không có giới hạn về
-                          những người dưới 18 tuổi đi du lịch một mình.
+                          {languageEN
+                            ? "Your age when traveling must be valid for the group age when booking ticket. Airlines have limits on people under 18 years old traveling alone."
+                            : "Tuổi của bạn khi đi du lịch phải hợp lệ đối với nhóm tuổi đã đặt vé. Các hãng hàng không có giới hạn về những người dưới 18 tuổi đi du lịch một mình."}
                         </p>
                         <p>
-                          Các giới hạn và chính sách về độ tuổi về du lịch với
-                          trẻ có thể khác nhau, vì vậy vui lòng kiểm tra với
-                          hãng hàng không trước khi đặt vé.
+                          {languageEN
+                            ? "Age restrictions and policies regarding travel with Children may vary, so please check with airline before booking tickets."
+                            : "Các giới hạn và chính sách về độ tuổi về du lịch với trẻ có thể khác nhau, vì vậy vui lòng kiểm tra với hãng hàng không trước khi đặt vé."}
                         </p>
                       </div>
                       <div class="triangle"></div>
                       <div class="confirm">
-                        <p onClick={handleConfirm}>Xong</p>
-                        <p onClick={handleClose}>Hủy</p>
+                        <p onClick={handleConfirm}>
+                          {languageEN ? "Finished" : "Xong"}
+                        </p>
+                        <p onClick={handleClose}>
+                          {languageEN ? "Cancel" : "Hủy"}
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
                 <div onClick={handleSearchMultipleCities} className="search">
-                  Tìm kiếm chuyến bay <AiOutlineArrowRight />
+                  {languageEN ? "Search for flights" : "Tìm kiếm chuyến bay"}
+                  <AiOutlineArrowRight />
                 </div>
               </div>
             </div>

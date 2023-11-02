@@ -3,7 +3,9 @@ import "../../styles/Login.scss";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 const Login = () => {
+  const languageEN = useSelector((state) => state.languageEN);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [authenticate, setAuthenticate] = useState({
@@ -19,30 +21,56 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     let { email, password } = authenticate;
-    try {
-      if (!email.trim()) {
-        toast.error("Vui lòng điền đầy đủ email !");
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-        toast.error("Định dạng email chưa đúng !");
-        return;
-      }
-      if (!password.trim()) {
-        toast.error("Vui lòng điền đầy đủ passowrd !");
-        return;
-      }
-    } catch (error) {
-      toast.error("Tài khoản hoặc mật khẩu không chính xác !");
+    // try {
+    //   if (!email.trim()) {
+    //     toast.error(
+    //       languageEN
+    //         ? "Please fill in your email completely!"
+    //         : "Vui lòng điền đầy đủ email !"
+    //     );
+    //     return;
+    //   }
+    //   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    //     toast.error(
+    //       languageEN
+    //         ? "Email format is not correct!"
+    //         : "Định dạng email chưa đúng !"
+    //     );
+    //     return;
+    //   }
+    //   if (!password.trim()) {
+    //     toast.error(
+    //       languageEN
+    //         ? "Please fill in the password completely!"
+    //         : "Vui lòng điền đầy đủ passowrd !"
+    //     );
+    //     return;
+    //   }
+    //   // navigate("/home/information-user");
+    // } catch (error) {
+    //   toast.error(
+    //     languageEN
+    //       ? "Incorrect account or password!"
+    //       : "Tài khoản hoặc mật khẩu không chính xác !"
+    //   );
+    // }
+    if (email === "admin" && password === "1") {
+      navigate("/information-user");
     }
+  };
+
+  const handleComeBackHome = () => {
+    navigate("/home/page");
   };
 
   return (
     <div className="login_container">
       <div className="login_container--content">
-        <div className="title-content">LOGIN</div>
+        <div className="title-content">
+          {languageEN ? "LOGIN" : "Đăng nhập"}
+        </div>
         <div className="input-content">
           <input
             type="text"
@@ -61,7 +89,10 @@ const Login = () => {
           )}
         </div>
         <div className="login_confirm" onClick={handleLogin}>
-          Đăng nhập
+          {languageEN ? "Log in" : "Đăng nhập"}
+        </div>
+        <div className="come_home" onClick={handleComeBackHome}>
+          {languageEN ? "Home page" : "Trang chủ"}
         </div>
       </div>
     </div>

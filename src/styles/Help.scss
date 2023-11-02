@@ -1,0 +1,106 @@
+.help_container {
+  width: 100%;
+  background: url(https://cdn.timviec365.vn/pictures/images/du-lich-mice-la-gi-1.jpg);
+  height: 80vh;
+  background-size: cover;
+  font-size: var(--primary-size);
+  font-family: var(--primary-family);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  h1 {
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+  .help_content {
+    width: 60%;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(500px);
+    border-radius: 10px;
+    .help_input {
+      width: 80%;
+      border: none;
+      padding: 10px 20px;
+      outline: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .help_btn {
+      border: none;
+      background-color: #00a698;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+    }
+  }
+}
+.help_information {
+  width: 100%;
+  font-size: var(--primary-size);
+  font-family: var(--primary-family);
+  .help_title {
+    width: 70%;
+    margin: 10px auto 10px;
+    h2 {
+      color: #0770e3;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+  .help_option {
+    width: 70%;
+    margin: 0 auto;
+    .help_option_start {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      div {
+        width: 32.5%;
+        background-color: #f1f2f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 276px;
+        border-radius: 5px;
+        p {
+          font-size: 1.2rem;
+          color: #00a698;
+          font-weight: 600;
+        }
+      }
+    }
+    .help_option_end {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      div {
+        width: 49.5%;
+        background-color: #f1f2f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 276px;
+        border-radius: 5px;
+        cursor: pointer;
+        p {
+          font-size: 1.2rem;
+          color: #00a698;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

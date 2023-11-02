@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
-import Flight from "../components/Home/Flight";
-import Introduce from "../components/Home/Introduce";
-import ListTicket from "../components/Home/ListTicket";
 import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/home/page");
+  }, []);
   return (
     <>
       <Header />
-      <Flight />
-      <Introduce />
-      <ListTicket />
+      <Outlet />
       <Footer />
     </>
   );
