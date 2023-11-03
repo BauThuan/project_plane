@@ -9,6 +9,7 @@ import ModalSearchHelp from "../Modal/ModalSearchHelp";
 import ModalHelpReservations from "../Modal/ModalHelpReservations";
 import ModalHelpPrice from "../Modal/ModalHelpPrice";
 import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 import "../../styles/root.scss";
 import "../../styles/Help.scss";
@@ -62,6 +63,12 @@ const Help = () => {
   };
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>
+          {languageEN ? "Help | Skyscanner" : "Trợ giúp | Skyscanner"}
+        </title>
+      </Helmet>
       <div className="help_container">
         <h1>
           {languageEN

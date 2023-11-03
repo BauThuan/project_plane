@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { LogIn } from "../Redux/Action";
+import { Helmet } from "react-helmet";
 const Login = () => {
   const dispatch = useDispatch();
   const languageEN = useSelector((state) => state.languageEN);
@@ -73,37 +74,54 @@ const Login = () => {
     navigate("/home/page");
   };
 
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
   return (
-    <div className="login_container">
-      <div className="login_container--content">
-        <div className="title-content">
-          {languageEN ? "LOGIN" : "Đăng nhập"}
-        </div>
-        <div className="input-content">
-          <input
-            type="text"
-            onChange={(e) => handleOnChange("email", e)}
-            placeholder="Email đăng nhập ..."
-          />
-          <input
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => handleOnChange("password", e)}
-            placeholder="Password ..."
-          />
-          {showPassword ? (
-            <AiFillEye className="icon" onClick={handleShowPass} />
-          ) : (
-            <AiFillEyeInvisible onClick={handleShowPass} className="icon" />
-          )}
-        </div>
-        <div className="login_confirm" onClick={handleLogin}>
-          {languageEN ? "Log in" : "Đăng nhập"}
-        </div>
-        <div className="come_home" onClick={handleComeBackHome}>
-          {languageEN ? "Home page" : "Trang chủ"}
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>
+          {languageEN ? "Login | Skyscanner" : "Đăng nhập | Skyscanner"}
+        </title>
+      </Helmet>
+      <div className="login_container">
+        <div className="login_container--content">
+          <div className="title-content">
+            {languageEN ? "LOGIN" : "Đăng nhập"}
+          </div>
+          <div className="input-content">
+            <input
+              type="text"
+              onChange={(e) => handleOnChange("email", e)}
+              placeholder="Email đăng nhập ..."
+            />
+            <input
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => handleOnChange("password", e)}
+              placeholder="Password ..."
+            />
+            {showPassword ? (
+              <AiFillEye className="icon" onClick={handleShowPass} />
+            ) : (
+              <AiFillEyeInvisible onClick={handleShowPass} className="icon" />
+            )}
+          </div>
+          <div className="login_confirm" onClick={handleLogin}>
+            {languageEN ? "Log in" : "Đăng nhập"}
+          </div>
+          <div className="come_home" onClick={handleRegister}>
+            {languageEN
+              ? "You don't have an account yet? Register"
+              : "Bạn chưa có tài khoản? Đăng ký"}
+          </div>
+          <div className="come_home" onClick={handleComeBackHome}>
+            {languageEN ? "Home page" : "Trang chủ"}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

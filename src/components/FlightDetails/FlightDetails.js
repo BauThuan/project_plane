@@ -3,23 +3,31 @@ import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import { BiSolidUser } from "react-icons/bi";
 import { CgAirplane } from "react-icons/cg";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { PiWarningCircleFill } from "react-icons/pi";
-import {  useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/esm/Container";
+import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 import "../../styles/root.scss";
 import "../../styles/FlightDetails.scss";
-import { toast } from "react-toastify";
 const FlightDetails = () => {
   const languageEN = useSelector((state) => state.languageEN);
   const navigate = useNavigate();
   const handleOrderTicketSuccess = () => {
-    toast.success("Gần xong rồi !");
+    toast.success(languageEN ? "Nearly done!" : "Gần xong rồi !");
     navigate("/home/ticket-booking");
   };
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>
+          {languageEN
+            ? "Flight Details | Skyscanner"
+            : "Chi tiết vé máy bay | Skyscanner"}
+        </title>
+      </Helmet>
       <div className="details_container">
         <div className="details_container-start">
           <p className="name_city">Thành phố Hồ Chí Minh - Thành phố Hà Nội</p>

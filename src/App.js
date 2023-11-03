@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./components/Redux/Store";
 import Home from "./views/Home";
 import Login from "./components/Authenticate/Login";
+import Register from "./components/Authenticate/Register";
 import HomePage from "./components/Home/HomePage";
 import Help from "./components/Help/Help";
 import RoutePage from "./views/RoutePage";
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="profile-user" element={<ProfileUser />} />
         </Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
         <Route path="/information-user" element={<InformationUser />} />
       </Routes>
     </Provider>
