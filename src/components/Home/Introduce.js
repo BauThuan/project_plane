@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosAirplane } from "react-icons/io";
 import { AiFillCreditCard, AiFillTag } from "react-icons/ai";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import "../../styles/Introduce.scss";
 import "../../styles/root.scss";
 

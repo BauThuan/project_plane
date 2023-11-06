@@ -68,7 +68,7 @@ const ListTicket = () => {
     },
   ];
   return (
-    <div className="listTicket_container">
+    <div className="listTicket_container ">
       <div className="listTicket_content">
         <h1>
           {languageEN

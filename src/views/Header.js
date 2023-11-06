@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { LanguageEN, LanguageVN } from "../components/Redux/Action";
+import {
+  LanguageEN,
+  LanguageVN,
+  LightChangeBgColor,
+  DarkChangeBgColor,
+} from "../components/Redux/Action";
 import { Link } from "react-router-dom";
-import bg from "../image/logo.png";
+import bg from "../image/logo2.png";
 import { LogOut } from "../components/Redux/Action";
+import { toast } from "react-toastify";
+// import { VscColorMode } from "react-icons/vsc";
+import { MdOutlineLightMode, MdNightlight } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/root.scss";
 import "../styles/Header.scss";
-import { toast } from "react-toastify";
 
 const Header = () => {
   const dispatch = useDispatch();
   const languageEN = useSelector((state) => state.languageEN);
+  const bgColor = useSelector((state) => state.changeBgColor);
   const isLogIn = useSelector((state) => state.isLogIn);
+  const [isChangeBgColor, setIsChangeBgColor] = useState("dark");
   console.log(">>> check data", languageEN);
   const handleChangeLanguage = (type) => {
     if (type === "VN") {
@@ -33,16 +42,27 @@ const Header = () => {
     );
     dispatch(LogOut());
   };
+
+  const handleChangeBackgroundColor = (type) => {
+    if (type === "dark") {
+      setIsChangeBgColor("light");
+      dispatch(DarkChangeBgColor());
+    }
+    if (type === "light") {
+      setIsChangeBgColor("dark");
+      dispatch(LightChangeBgColor());
+    }
+  };
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
-      bg="light"
-      data-bs-theme="light"
+      bg={bgColor ? "light" : "dark"}
+      data-bs-theme={bgColor ? "light" : "dark"}
       className="bg-body-tertiary header_container z-2"
     >
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           <Link to="/home/page" className="text-decoration-none">
             <img className="logo" src={bg} alt="logo" />
           </Link>
@@ -51,13 +71,29 @@ const Header = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>
           <Nav>
+            {isChangeBgColor === "dark" ? (
+              <Nav.Link>
+                <MdNightlight
+                  onClick={() => handleChangeBackgroundColor("dark")}
+                  style={{ fontSize: "20px" }}
+                />
+              </Nav.Link>
+            ) : (
+              <Nav.Link>
+                <MdOutlineLightMode
+                  onClick={() => handleChangeBackgroundColor("light")}
+                  style={{ fontSize: "20px" }}
+                />
+              </Nav.Link>
+            )}
+
             <Nav.Link>
               <Link to="/home/help" className="text-decoration-none">
                 {languageEN ? "Help" : "Trợ giúp"}
               </Link>
             </Nav.Link>
             <NavDropdown
-              className="text_color"
+              className="text_color text-decoration-none"
               title="Language"
               id="collapsible-nav-dropdown"
             >

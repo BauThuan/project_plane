@@ -1,6 +1,7 @@
 const initState = {
   languageEN: false,
   isLogIn: false,
+  changeBgColor: true,
 };
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
@@ -23,6 +24,16 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         isLogIn: false,
+      };
+    case "LightChangeBgColor":
+      return {
+        ...state,
+        changeBgColor: true,
+      };
+    case "DarkChangeBgColor":
+      return {
+        ...state,
+        changeBgColor: false,
       };
     default:
       return state;

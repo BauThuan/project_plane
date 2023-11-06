@@ -13,13 +13,14 @@ import "../../styles/root.scss";
 import "../../styles/FlightDetails.scss";
 const FlightDetails = () => {
   const languageEN = useSelector((state) => state.languageEN);
+  const bgColor = useSelector((state) => state.changeBgColor);
   const navigate = useNavigate();
   const handleOrderTicketSuccess = () => {
     toast.success(languageEN ? "Nearly done!" : "Gần xong rồi !");
     navigate("/home/ticket-booking");
   };
   return (
-    <>
+    <div style={bgColor ? {} : { backgroundColor: "#1d2a35", color: "#fff" }}>
       <Helmet>
         <meta charSet="utf-8" />
         <title>
@@ -36,7 +37,7 @@ const FlightDetails = () => {
           </p>
           <p>Một chiều . Phổ thông</p>
         </div>
-        <div className="details_container-end">
+        <div className="details_container-end ">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="1">
               <Accordion.Header>
@@ -213,7 +214,7 @@ const FlightDetails = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default FlightDetails;

@@ -247,6 +247,9 @@ const Flight = () => {
   const handleSearchRoundWay = (type) => {
     if (type === "Khứ hồi") {
       let { addressStart, addressEnd, startTime, endTime } = listRoundTrip;
+      let currentDate = new Date();
+      let selectedDateStart = new Date(startTime);
+      let selectedDateEnd = new Date(endTime);
       if (!addressStart.trim()) {
         toast.error(
           languageEN
@@ -271,11 +274,38 @@ const Flight = () => {
         );
         return;
       }
+      // đang có vấn đề về so sánh ngày giống nhau
+      if (selectedDateStart <= currentDate) {
+        toast.error(
+          languageEN
+            ? "Departure date must be greater than current date!"
+            : "Ngày khởi hành phải lớn hơn ngày hiện tại !"
+        );
+        return;
+      }
+
       if (!endTime.trim()) {
         toast.error(
           languageEN
             ? "Please select an end time!"
             : "Vui lòng chọn thời gian kết thúc !"
+        );
+        return;
+      }
+      // đang có vấn đề về so sánh giống nhau
+      if (selectedDateEnd < currentDate) {
+        toast.error(
+          languageEN
+            ? "The end date must be greater than the current date!"
+            : "Ngày kết thúc phải lớn hơn ngày hiện tại !"
+        );
+        return;
+      }
+      if (selectedDateEnd < selectedDateStart) {
+        toast.error(
+          languageEN
+            ? "The ending date is smaller than the starting date!"
+            : "Ngày kết thúc nhỏ hơn ngày bắt đầu !"
         );
         return;
       }
@@ -364,7 +394,6 @@ const Flight = () => {
       );
     }
   };
-
   const handleOnChange = (type, event) => {
     if (checkRadio === "Khứ hồi") {
       setListRoundTrip({
@@ -392,7 +421,6 @@ const Flight = () => {
     }
   }, [listAddNewPlane]);
 
-  console.log(">>> check data 1 chieu", listOneWay);
   return (
     <div className="flight_container">
       <div className="flight_container--content">

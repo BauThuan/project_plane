@@ -8,7 +8,7 @@ import introduce from "../../image/introduce.png";
 import ModalSearchHelp from "../Modal/ModalSearchHelp";
 import ModalHelpReservations from "../Modal/ModalHelpReservations";
 import ModalHelpPrice from "../Modal/ModalHelpPrice";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 import "../../styles/root.scss";
@@ -16,6 +16,7 @@ import "../../styles/Help.scss";
 
 const Help = () => {
   const languageEN = useSelector((state) => state.languageEN);
+  const bgColor = useSelector((state) => state.changeBgColor);
   const [isShowModalSearchHelp, setIsShowModalSearchHelp] = useState(false);
   const [isShowModalHelpReservations, setIsShowModalHelpReservations] =
     useState(false);
@@ -62,7 +63,7 @@ const Help = () => {
     setIsShowModalHelpPrice(false);
   };
   return (
-    <>
+    <div style={bgColor ? {} : { backgroundColor: "#1d2a35", color: "#fff" }}>
       <Helmet>
         <meta charSet="utf-8" />
         <title>
@@ -145,7 +146,7 @@ const Help = () => {
         handle={handleHideModalHelpPrice}
         title={title}
       />
-    </>
+    </div>
   );
 };
 

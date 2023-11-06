@@ -47,7 +47,7 @@ function ModalEditProfile(props) {
   }, [numberOfAdults]);
   return (
     <>
-      <Modal     show={show} onHide={handle}>
+      <Modal show={show} onHide={handle}>
         <Modal.Header closeButton>
           <Modal.Title>
             {languageEN
@@ -60,33 +60,61 @@ function ModalEditProfile(props) {
             <div className="modal_content row">
               <div className="modal_describe col-6">
                 <label>{languageEN ? "First name" : "Tên"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-6">
                 <label>{languageEN ? "Last name" : "Họ"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-6 mt-3">
                 <label>{languageEN ? "Email" : "Hộp thư cá nhân"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-6 mt-3">
                 <label>{languageEN ? "Birthday" : "Ngày tháng năm sinh"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-12 mt-3">
                 <label>{languageEN ? "Address" : "Địa chỉ"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-6 mt-3">
                 <label>{languageEN ? "Phone" : "Số điện thoại"}</label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
               <div className="col-6 mt-3">
                 <label>
                   {languageEN ? "Identification" : "Căn cước công dân"}
                 </label>
-                <input className="form-control" type="text" />
+                <input
+                  onChange={(e) => handleOnChange("", e)}
+                  className="form-control"
+                  type="text"
+                />
               </div>
             </div>
           </div>

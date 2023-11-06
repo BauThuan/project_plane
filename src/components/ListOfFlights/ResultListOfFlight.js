@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import { CgAirplane } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import "../../styles/root.scss";
 import "../../styles/ResultListOfFlight.scss";
 const ResultListOfFlight = () => {
@@ -81,7 +81,6 @@ const ResultListOfFlight = () => {
       price: "780.000",
     },
   ];
-
   const handleNavigateFlightDetials = () => {
     navigate("/home/flight-details");
   };

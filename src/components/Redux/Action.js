@@ -23,3 +23,16 @@ export const LogOut = (data) => {
     payload: data,
   };
 };
+
+export const LightChangeBgColor = (data) => {
+  return {
+    type: "LightChangeBgColor",
+    payload: data,
+  };
+};
+export const DarkChangeBgColor = (data) => {
+  return {
+    type: "DarkChangeBgColor",
+    payload: data,
+  };
+};

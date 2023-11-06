@@ -14,7 +14,6 @@ import ListOfFlights from "./components/ListOfFlights/ListOfFlights";
 import FlightDetails from "./components/FlightDetails/FlightDetails";
 import TicketBook from "./components/TicketBooking/TicketBook";
 import InformationUser from "./components/InformationUser/InformationUser";
-import History from "./components/History/History";
 import ProfileUser from "./components/InformationUser/ProfileUser";
 
 const App = () => {
@@ -40,7 +39,6 @@ const App = () => {
           <Route path="flight-details" element={<FlightDetails />} />
           <Route path="ticket-booking" element={<TicketBook />} />
           <Route path="help" element={<Help />} />
-          <Route path="history" element={<History />} />
           <Route path="profile-user" element={<ProfileUser />} />
         </Route>
         <Route path="/login" element={<Login />}></Route>
