@@ -86,7 +86,7 @@ const Header = () => {
                 />
               </Nav.Link>
             )}
-
+          {/* đang gặp lỗi thẻ a lồng nhau ở header */}
             <Nav.Link>
               <Link to="/home/help" className="text-decoration-none">
                 {languageEN ? "Help" : "Trợ giúp"}

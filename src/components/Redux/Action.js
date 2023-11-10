@@ -36,3 +36,23 @@ export const DarkChangeBgColor = (data) => {
     payload: data,
   };
 };
+
+export const RoundTrip = (data) => {
+  return {
+    type: "RoundTrip",
+    payload: data,
+  };
+};
+export const OneWay = (data) => {
+  return {
+    type: "OneWay",
+    payload: data,
+  };
+};
+
+export const ManyCities = (data) => {
+  return {
+    type: "ManyCities",
+    payload: data,
+  };
+};

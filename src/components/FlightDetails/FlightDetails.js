@@ -19,6 +19,7 @@ const FlightDetails = () => {
     toast.success(languageEN ? "Nearly done!" : "Gần xong rồi !");
     navigate("/home/ticket-booking");
   };
+
   return (
     <div style={bgColor ? {} : { backgroundColor: "#1d2a35", color: "#fff" }}>
       <Helmet>

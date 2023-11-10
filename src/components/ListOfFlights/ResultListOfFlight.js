@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import {
   AiFillCaretLeft,
@@ -12,7 +12,9 @@ import "../../styles/root.scss";
 import "../../styles/ResultListOfFlight.scss";
 const ResultListOfFlight = () => {
   const languageEN = useSelector((state) => state.languageEN);
+  const listStoreRoundTrip = useSelector((state) => state.listOfRoundTrip);
   const navigate = useNavigate();
+  const [listNewRoundTrip, setListNewRoundTrip] = useState([]);
   const datafake = [
     {
       image:
@@ -84,61 +86,82 @@ const ResultListOfFlight = () => {
   const handleNavigateFlightDetials = () => {
     navigate("/home/flight-details");
   };
+  useEffect(() => {
+    setListNewRoundTrip([...listNewRoundTrip, listStoreRoundTrip]);
+  }, [listStoreRoundTrip]);
+  console.log(">>> check roundTrip", listStoreRoundTrip);
   return (
     <div className="result_container">
       <div className="result_content">
-        <div className="menu">
-          <div className="search">
-            <BiSearch />
-          </div>
-          <div className="list_data">
-            <div className="name_city">
-              <p>Thành phố Hồ Chí Minh - Phú Quốc</p>
-            </div>
-            <div className="traveler_cabin">
-              <p>3 khách du lịch | Phổ thông</p>
-            </div>
-          </div>
-          <div className="date">
-            <AiFillCaretLeft className="icon_size" />
-            2023-12-03
-            <AiFillCaretRight className="icon_size" />
-          </div>
-        </div>
+        {listNewRoundTrip.length > 0 &&
+          listNewRoundTrip &&
+          listNewRoundTrip.map((item, index) => {
+            return (
+              <div className="menu" key={`index ${index}`}>
+                <div className="search">
+                  <BiSearch />
+                </div>
+                <div className="list_data">
+                  <div className="name_city">
+                    <p>
+                      {item.addressStart} - {item.addressEnd}
+                    </p>
+                  </div>
+                  <div className="traveler_cabin">
+                    <p>
+                      {languageEN
+                        ? ` ${item.adult} adults | ${item.children} children |
+                      ${item.cabin}`
+                        : ` ${item.adult} người lớn | ${item.children} trẻ em |
+                      ${item.cabin}`}
+                    </p>
+                  </div>
+                </div>
+                <div className="date">
+                  <AiFillCaretLeft className="icon_size" />
+                  {item.startTime}
+                  <AiFillCaretRight className="icon_size" />
+                </div>
+              </div>
+            );
+          })}
         <div className="result">
-          {datafake.length > 0 &&
-            datafake &&
-            datafake.map((item, index) => {
+          {listNewRoundTrip.length > 0 &&
+            listNewRoundTrip &&
+            listNewRoundTrip.map((item, index) => {
               return (
                 <div className="details_result">
                   <div className="details_result--left">
                     <div className="image-logo-form">
-                      <img className="image-logo" src={item.image} />
+                      <img
+                        className="image-logo"
+                        src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-VNA-Sky-Te-V.png"
+                      />
                     </div>
                     <div className="time_plane">
                       <div className="address_start">
-                        <p>{item.timeStart}</p>
+                        <p>{item.startTime}</p>
                         <p>{item.addressStart}</p>
                       </div>
                       <div className="line">
-                        <p className="total_time">{item.totalTime}</p>
+                        <p className="total_time">2h</p>
                         <div>
                           <p className="line_address"></p>
                           <p className="icon_plane">
                             <CgAirplane className="icon_plane_child" />
                           </p>
                         </div>
-                        <p className="status">{item.status}</p>
+                        <p className="status">Trực tiếp</p>
                       </div>
                       <div className="address_end">
-                        <p>{item.timeEnd}</p>
+                        <p>{item.endTime}</p>
                         <p>{item.addressEnd}</p>
                       </div>
                     </div>
                   </div>
                   <div className="details_result--right">
                     <p>
-                      {item.price}
+                      1.000.000
                       <u>đ</u>
                     </p>
                     <p
