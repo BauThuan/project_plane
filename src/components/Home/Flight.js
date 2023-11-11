@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import ModalSelectPeople from "../Modal/ModalSelectPeople";
 import { useDispatch } from "react-redux";
-import { RoundTrip, OneWay, ManyCities } from "../Redux/Action";
+import { RoundTrip, OneWay, ManyCities, isTitle } from "../Redux/Action";
 import "../../styles/root.scss";
 import "../../styles/Flight.scss";
 
@@ -54,6 +54,7 @@ const Flight = () => {
   const [isShowModalSelectPeople, setIsShowModalSelectPeople] = useState(false);
   const [numberOfAdults, setNumberOfAdults] = useState(0);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [title, setTitle] = useState("");
 
   const handleOptionFlightMethod = (type) => {
     setCheckRadio(type);
@@ -231,17 +232,27 @@ const Flight = () => {
     }
   };
 
-  const handleShowModalSelectPeople = () => {
+  const handleShowModalSelectPeople = (type) => {
     setIsShowModalSelectPeople(true);
+    setTitle(type);
   };
 
   const handleHideModalSelectPeople = () => {
     setIsShowModalSelectPeople(false);
   };
 
-  const handleUpdateListTraveler = (listData) => {
-    setListRoundTrip({
-      ...listRoundTrip,
+  const handleUpdateListTraveler = (type, listData) => {
+    console.log(">>> check type handleUpdateListTraveler", type);
+    if (type === "Khứ hồi") {
+      setListRoundTrip({
+        ...listRoundTrip,
+        adult: listData.adult,
+        children: listData.children,
+        cabin: listData.cabin,
+      });
+    }
+    setListOneWay({
+      ...listOneWay,
       adult: listData.adult,
       children: listData.children,
       cabin: listData.cabin,
@@ -335,12 +346,13 @@ const Flight = () => {
           ? "Choose a successful location!"
           : "Chọn địa điểm thành công !"
       );
-      console.log(">>> check roundTrip", listRoundTrip);
+      setTitle(type);
       dispatch(RoundTrip(listRoundTrip));
+      dispatch(isTitle(type));
       navigate("/home/list-of-flight");
     }
     if (type === "Một chiều") {
-      let { addressStart, addressEnd, startTime } = listOneWay;
+      let { addressStart, addressEnd, startTime, adult, children } = listOneWay;
       let starTimeDate = new Date(startTime);
       let realTime = new Date();
       if (!addressStart.trim()) {
@@ -375,7 +387,7 @@ const Flight = () => {
         );
         return;
       }
-      if (numberOfAdults === 0 || numberOfChildren === 0) {
+      if (adult === 0 || children === 0) {
         toast.error(
           languageEN
             ? "Please select all travelers and cabin class!"
@@ -391,19 +403,15 @@ const Flight = () => {
         );
         return;
       }
-
-      setListOneWay({
-        ...listOneWay,
-        adult: numberOfAdults,
-        children: numberOfChildren,
-        cabin: selectedOption,
-      });
       toast.success(
         languageEN
           ? "Choose a successful location!"
           : "Chọn địa điểm thành công !"
       );
+      setTitle(type);
       dispatch(OneWay(listOneWay));
+      dispatch(isTitle(type));
+      navigate("/home/list-of-flight");
     }
   };
   const handleOnChange = (type, event) => {
@@ -432,12 +440,6 @@ const Flight = () => {
       setSelectedOption("Phổ thông");
     }
   }, [listAddNewPlane]);
-
-  // console.log(">>> check roundTrip", listRoundTrip);
-  // console.log(">>> check oneWay", listOneWay);
-  // console.log(">>> check ManyCities", listAddNewPlane);
-  // const listStoreRoundTrip = useSelector((state) => state.listOfRoundTrip);
-  // console.log(">>> check data Redux", listStoreRoundTrip);
   return (
     <div className="flight_container">
       <div className="flight_container--content">
@@ -550,7 +552,7 @@ const Flight = () => {
                   </span>
                   <div
                     className="input_render"
-                    onClick={handleShowModalSelectPeople}
+                    onClick={() => handleShowModalSelectPeople(checkRadio)}
                   >
                     {languageEN
                       ? `${listRoundTrip.adult} adults, ${listRoundTrip.children} children, ${listRoundTrip.cabin} cabin`
@@ -797,6 +799,7 @@ const Flight = () => {
         numberOfAdults={numberOfAdults}
         numberOfChildren={numberOfChildren}
         selectedOption={selectedOption}
+        title={title}
       />
     </div>
   );

@@ -5,9 +5,13 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import { useDispatch } from "react-redux";
+import { isRegister } from "../Redux/Action";
 import "../../styles/Register.scss";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const registerEmail = useSelector((state) => state.listLogin);
   const languageEN = useSelector((state) => state.languageEN);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -74,6 +78,21 @@ const Register = () => {
       );
       return;
     }
+    if (email === registerEmail.email) {
+      toast.error(
+        languageEN
+          ? "Account has been registered!"
+          : "Tài khoản đã được đăng ký !"
+      );
+      return;
+    }
+    toast.success(
+      languageEN
+        ? "Account successfully registered!"
+        : "Đăng ký thành công tài khoản !"
+    );
+    dispatch(isRegister(register));
+    navigate("/login");
   };
 
   const handleLogin = () => {

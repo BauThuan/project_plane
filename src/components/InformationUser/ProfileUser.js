@@ -18,6 +18,7 @@ import "../../styles/ProfileUser.scss";
 const ProfileUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const email = useSelector((state) => state.listLogin);
   const languageEN = useSelector((state) => state.languageEN);
   const [isShowModalEditProfile, setIsShowModalEditProfile] = useState(false);
   const [isShowModalDeleteAccount, setIsShowModalDeleteAccount] =
@@ -111,9 +112,7 @@ const ProfileUser = () => {
                 <h1>{languageEN ? "Account" : "Tài khoản"}</h1>
                 <Accordion defaultActiveKey="0" className="z-n1">
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                      Email: bauthuanxd@gmail.com
-                    </Accordion.Header>
+                    <Accordion.Header>Email: {email.email}</Accordion.Header>
                     <Accordion.Body className="information_user">
                       <p>{languageEN ? "First name" : "Tên"}:</p>
                       <p>{languageEN ? "Last name" : "Họ"}:</p>

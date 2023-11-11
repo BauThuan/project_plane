@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet";
 const Login = () => {
   const dispatch = useDispatch();
   const languageEN = useSelector((state) => state.languageEN);
+  const loginSucc = useSelector((state) => state.listLogin);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [authenticate, setAuthenticate] = useState({
@@ -27,46 +28,28 @@ const Login = () => {
 
   const handleLogin = () => {
     let { email, password } = authenticate;
-    // try {
-    //   if (!email.trim()) {
-    //     toast.error(
-    //       languageEN
-    //         ? "Please fill in your email completely!"
-    //         : "Vui lòng điền đầy đủ email !"
-    //     );
-    //     return;
-    //   }
-    //   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    //     toast.error(
-    //       languageEN
-    //         ? "Email format is not correct!"
-    //         : "Định dạng email chưa đúng !"
-    //     );
-    //     return;
-    //   }
-    //   if (!password.trim()) {
-    //     toast.error(
-    //       languageEN
-    //         ? "Please fill in the password completely!"
-    //         : "Vui lòng điền đầy đủ passowrd !"
-    //     );
-    //     return;
-    //   }
-    //   // navigate("/home/information-user");
-    // } catch (error) {
-    //   toast.error(
-    //     languageEN
-    //       ? "Incorrect account or password!"
-    //       : "Tài khoản hoặc mật khẩu không chính xác !"
-    //   );
-    // }
-    if (email === "1" && password === "1") {
+    if (
+      email.trim() === loginSucc.email &&
+      password.trim() === loginSucc.password
+    ) {
       toast.success(
         languageEN ? "Logged in successfully !" : "Đăng nhập thành công !"
       );
-      // navigate("/information-user");
-      navigate("/home/page");
+      // toast.warning(
+      //   languageEN
+      //     ? "Please update your personal information!"
+      //     : "Vui lòng cập nhật thông tin cá nhân !"
+      // );
+      navigate("/home");
       dispatch(LogIn());
+      return;
+    }
+    if (email !== loginSucc.email && password !== loginSucc.password) {
+      toast.error(
+        languageEN
+          ? "Account password is incorrect!"
+          : "Tài khoản mật khâủ không chính xác !"
+      );
     }
   };
 
@@ -77,7 +60,7 @@ const Login = () => {
   const handleRegister = () => {
     navigate("/register");
   };
-
+  console.log(">>> chekc login", loginSucc.email);
   return (
     <>
       <Helmet>

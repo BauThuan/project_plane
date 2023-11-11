@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
 import { BiSolidUser } from "react-icons/bi";
@@ -13,12 +13,29 @@ import "../../styles/root.scss";
 import "../../styles/FlightDetails.scss";
 const FlightDetails = () => {
   const languageEN = useSelector((state) => state.languageEN);
+  const title = useSelector((state) => state.newTitle);
+  const listStoreRoundTrip = useSelector((state) => state.listOfRoundTrip);
+  const listStoreOneWay = useSelector((state) => state.listOfOneWay);
+  const [listFlightPlaneDetails, setListFlightPlaneDetails] = useState([]);
   const bgColor = useSelector((state) => state.changeBgColor);
   const navigate = useNavigate();
   const handleOrderTicketSuccess = () => {
     toast.success(languageEN ? "Nearly done!" : "Gần xong rồi !");
     navigate("/home/ticket-booking");
   };
+
+  useEffect(() => {
+    if (title === "Khứ hồi") {
+      setListFlightPlaneDetails([
+        ...listFlightPlaneDetails,
+        listStoreRoundTrip,
+      ]);
+      return;
+    }
+    setListFlightPlaneDetails([...listFlightPlaneDetails, listStoreOneWay]);
+  }, [title]);
+
+  console.log(">>> check list round Trip", listFlightPlaneDetails);
 
   return (
     <div style={bgColor ? {} : { backgroundColor: "#1d2a35", color: "#fff" }}>
@@ -31,48 +48,71 @@ const FlightDetails = () => {
         </title>
       </Helmet>
       <div className="details_container">
-        <div className="details_container-start">
-          <p className="name_city">Thành phố Hồ Chí Minh - Thành phố Hà Nội</p>
-          <p>
-            <BiSolidUser /> 1 người lớn, <BiSolidUser /> 2 trẻ em
-          </p>
-          <p>Một chiều . Phổ thông</p>
-        </div>
+        {listFlightPlaneDetails &&
+          listFlightPlaneDetails.length > 0 &&
+          listFlightPlaneDetails.map((item, index) => {
+            return (
+              <div className="details_container-start" key={`index ${index}`}>
+                <p className="name_city">
+                  {item.addressStart} - {item.addressEnd}
+                </p>
+                <p>
+                  <BiSolidUser />{" "}
+                  {languageEN
+                    ? `${item.adult} adults`
+                    : `${item.adult} người lớn`}
+                  , <BiSolidUser />{" "}
+                  {languageEN
+                    ? `${item.children} children`
+                    : `${item.children} trẻ em`}
+                </p>
+                <p>
+                  {title} . {item.cabin}
+                </p>
+              </div>
+            );
+          })}
         <div className="details_container-end ">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="1">
               <Accordion.Header>
                 <div className="details_result">
-                  <div className="details_result--left">
-                    <div className="image-logo-form">
-                      <img
-                        className="image-logo"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/VietJet_Air_logo.svg/2560px-VietJet_Air_logo.svg.png"
-                      />
-                    </div>
-                    <div className="time_plane">
-                      <div className="address_start">
-                        <p>17:00</p>
-                        <p>Hà Nội</p>
-                      </div>
-                      <div className="line">
-                        <p className="total_time">2h</p>
-                        <div>
-                          <p className="line_address"></p>
-                          <p className="icon_plane">
-                            <CgAirplane className="icon_plane_child" />
-                          </p>
+                  {listFlightPlaneDetails &&
+                    listFlightPlaneDetails.length > 0 &&
+                    listFlightPlaneDetails.map((item, index) => {
+                      return (
+                        <div className="details_result--left">
+                          <div className="image-logo-form">
+                            <img
+                              className="image-logo"
+                              src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-VNA-Sky-Te-V.png"
+                            />
+                          </div>
+                          <div className="time_plane">
+                            <div className="address_start">
+                              <p>17:00</p>
+                              <p>{item.addressStart}</p>
+                            </div>
+                            <div className="line">
+                              <p className="total_time">2h</p>
+                              <div>
+                                <p className="line_address"></p>
+                                <p className="icon_plane">
+                                  <CgAirplane className="icon_plane_child" />
+                                </p>
+                              </div>
+                              <p className="status">
+                                {languageEN ? "Direct" : "Trực tiếp"}
+                              </p>
+                            </div>
+                            <div className="address_end">
+                              <p>19:00</p>
+                              <p>{item.addressEnd}</p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="status">
-                          {languageEN ? "Direct" : "Trực tiếp"}
-                        </p>
-                      </div>
-                      <div className="address_end">
-                        <p>19:00</p>
-                        <p>Thành phố Hồ Chí Minh</p>
-                      </div>
-                    </div>
-                  </div>
+                      );
+                    })}
                 </div>
               </Accordion.Header>
               <Accordion.Body>
@@ -90,21 +130,33 @@ const FlightDetails = () => {
                           {languageEN ? "End time" : "Thời gian kết thúc"}
                         </th>
                         <th>{languageEN ? "Start day" : "Ngày bắt đầu"}</th>
+                        {title === "Khứ hồi" ? (
+                          <th>{languageEN ? "End day" : "Ngày kết thúc"}</th>
+                        ) : undefined}
                         <th>{languageEN ? "Flight time" : "Thời gian bay"}</th>
                         <th>{languageEN ? "Expense" : "Chi phí"}</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Vietjet</td>
-                        <td>Khứ hồi</td>
-                        <td>Phổ thông</td>
-                        <td>17:00</td>
-                        <td>19:00</td>
-                        <td>23/11/2023</td>
-                        <td>2h</td>
-                        <td>980.000đ</td>
-                      </tr>
+                      {listFlightPlaneDetails &&
+                        listFlightPlaneDetails.length > 0 &&
+                        listFlightPlaneDetails.map((item, index) => {
+                          return (
+                            <tr>
+                              <td>Vietnam Airlines</td>
+                              <td>{title}</td>
+                              <td>{item.cabin}</td>
+                              <td>17:00</td>
+                              <td>19:00</td>
+                              <td>{item.startTime}</td>
+                              {title === "Khứ hồi" ? (
+                                <td>{item.endTime}</td>
+                              ) : undefined}
+                              <td>2h</td>
+                              <td>980.000đ</td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </Table>
                 </Container>
@@ -114,7 +166,22 @@ const FlightDetails = () => {
         </div>
         <div className="details_container-center">
           <p>{languageEN ? "Book your tickets" : "Đặt vé của bạn"}</p>
-          <p>Phổ thông, 1 người lớn, 2 trẻ em</p>
+          {listFlightPlaneDetails &&
+            listFlightPlaneDetails.length > 0 &&
+            listFlightPlaneDetails.map((item, index) => {
+              return (
+                <p>
+                  {item.cabin},{" "}
+                  {languageEN
+                    ? `${item.adult} adult`
+                    : `${item.adult} người lớn`}
+                  ,{" "}
+                  {languageEN
+                    ? `${item.children} children`
+                    : `${item.children} trẻ em`}
+                </p>
+              );
+            })}
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="1">
               <Accordion.Header>

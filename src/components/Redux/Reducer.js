@@ -5,6 +5,8 @@ const initState = {
   listOfRoundTrip: [],
   listOfOneWay: [],
   listOfManyCities: [],
+  listLogin: {},
+  newTitle: "",
 };
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
@@ -51,6 +53,33 @@ const rootReducer = (state = initState, action) => {
           children: action.payload.children,
           cabin: action.payload.cabin,
         },
+      };
+    case "OneWay":
+      return {
+        ...state,
+        listOfOneWay: {
+          ...state.listOfOneWay,
+          addressStart: action.payload.addressStart,
+          addressEnd: action.payload.addressEnd,
+          startTime: action.payload.startTime,
+          adult: action.payload.adult,
+          children: action.payload.children,
+          cabin: action.payload.cabin,
+        },
+      };
+    case "isRegister":
+      return {
+        ...state,
+        listLogin: {
+          ...state.listLogin,
+          email: action.payload.email,
+          password: action.payload.password,
+        },
+      };
+    case "isTitle":
+      return {
+        ...state,
+        newTitle: action.payload,
       };
     default:
       return state;

@@ -8,6 +8,7 @@ import "../../styles/TicketBook.scss";
 
 const TicketBook = () => {
   const languageEN = useSelector((state) => state.languageEN);
+  const logInCheck = useSelector((state) => state.isLogIn);
   const navigate = useNavigate();
   const [hideButton, setHideButton] = useState(false);
   useEffect(() => {
@@ -19,9 +20,18 @@ const TicketBook = () => {
     };
   }, []);
   const handleSuccesfull = () => {
-    toast.success(languageEN ? "Sign Up Success !" : "Đăng ký thành công !");
-    setHideButton(false);
-    navigate("/home/page");
+    if (logInCheck === true) {
+      toast.success(languageEN ? "Sign Up Success !" : "Đăng ký thành công !");
+      setHideButton(false);
+      navigate("/home/page");
+      return;
+    }
+    toast.error(
+      languageEN
+        ? "Please log in to use the service!"
+        : "Vui lòng đăng nhập để sử dụng dịch vụ !"
+    );
+    navigate("/login");
   };
   return (
     <>

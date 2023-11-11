@@ -13,89 +13,33 @@ import "../../styles/ResultListOfFlight.scss";
 const ResultListOfFlight = () => {
   const languageEN = useSelector((state) => state.languageEN);
   const listStoreRoundTrip = useSelector((state) => state.listOfRoundTrip);
+  const listStoreOneWay = useSelector((state) => state.listOfOneWay);
+  const title = useSelector((state) => state.newTitle);
   const navigate = useNavigate();
-  const [listNewRoundTrip, setListNewRoundTrip] = useState([]);
-  const datafake = [
-    {
-      image:
-        "https://inkythuatso.com/uploads/images/2021/09/logo-bamboo-airways-inkythuatso-13-16-26-24.jpg",
-      addressStart: "Hà Nội",
-      addressEnd: "Đà Nẵng",
-      timeStart: "17:00",
-      timeEnd: "21:00",
-      totalTime: "4h",
-      status: "Trực tiếp",
-      price: "999.000",
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/VietJet_Air_logo.svg/2560px-VietJet_Air_logo.svg.png",
-      addressStart: "TP. Hồ Chí Minh",
-      addressEnd: "Hà Nội",
-      timeStart: "10:00",
-      timeEnd: "15:00",
-      totalTime: "5h",
-      status: "Trực tiếp",
-      price: "1.000.000",
-    },
-    {
-      image:
-        "https://www.vietnamairlines.com/~/media/Images/VNANew/Home/Logo%20Header/logo_vna-mobile.png",
-      addressStart: "Đà Nẵng",
-      addressEnd: "TP. Hồ Chí Minh",
-      timeStart: "5:00",
-      timeEnd: "7:00",
-      totalTime: "2h",
-      status: "Trực tiếp",
-      price: "780.000",
-    },
-    {
-      image:
-        "https://inkythuatso.com/uploads/images/2021/09/logo-bamboo-airways-inkythuatso-13-16-26-24.jpg",
-      addressStart: "Hà Nội",
-      addressEnd: "Đà Nẵng",
-      timeStart: "17:00",
-      timeEnd: "21:00",
-      totalTime: "4h",
-      status: "Trực tiếp",
-      price: "999.000",
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/VietJet_Air_logo.svg/2560px-VietJet_Air_logo.svg.png",
-      addressStart: "TP. Hồ Chí Minh",
-      addressEnd: "Hà Nội",
-      timeStart: "10:00",
-      timeEnd: "15:00",
-      totalTime: "5h",
-      status: "Trực tiếp",
-      price: "1.000.000",
-    },
-    {
-      image:
-        "https://www.vietnamairlines.com/~/media/Images/VNANew/Home/Logo%20Header/logo_vna-mobile.png",
-      addressStart: "Đà Nẵng",
-      addressEnd: "TP. Hồ Chí Minh",
-      timeStart: "5:00",
-      timeEnd: "7:00",
-      totalTime: "2h",
-      status: "Trực tiếp",
-      price: "780.000",
-    },
-  ];
+  const [listFlightPlane, setListFlightPlane] = useState([]);
+
   const handleNavigateFlightDetials = () => {
     navigate("/home/flight-details");
   };
   useEffect(() => {
-    setListNewRoundTrip([...listNewRoundTrip, listStoreRoundTrip]);
-  }, [listStoreRoundTrip]);
-  console.log(">>> check roundTrip", listStoreRoundTrip);
+    if (title === "Khứ hồi") {
+      setListFlightPlane([...listFlightPlane, listStoreRoundTrip]);
+      return;
+    }
+    setListFlightPlane([...listFlightPlane, listStoreOneWay]);
+  }, [title]);
+
+  // console.log(">>> check tiitle", title);
+  // console.log(">>> check titile", title);
+  // console.log(">>> check setListfligjtPlane", listFlightPlane);
+  // console.log(">>> check rondTrip", listStoreRoundTrip);
+  // console.log(">>> check OneWay", listStoreOneWay);
   return (
     <div className="result_container">
       <div className="result_content">
-        {listNewRoundTrip.length > 0 &&
-          listNewRoundTrip &&
-          listNewRoundTrip.map((item, index) => {
+        {listFlightPlane.length > 0 &&
+          listFlightPlane &&
+          listFlightPlane.map((item, index) => {
             return (
               <div className="menu" key={`index ${index}`}>
                 <div className="search">
@@ -126,9 +70,9 @@ const ResultListOfFlight = () => {
             );
           })}
         <div className="result">
-          {listNewRoundTrip.length > 0 &&
-            listNewRoundTrip &&
-            listNewRoundTrip.map((item, index) => {
+          {listFlightPlane.length > 0 &&
+            listFlightPlane &&
+            listFlightPlane.map((item, index) => {
               return (
                 <div className="details_result">
                   <div className="details_result--left">

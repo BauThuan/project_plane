@@ -23,6 +23,7 @@ import "../styles/Header.scss";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const email = useSelector((state) => state.listLogin);
   const languageEN = useSelector((state) => state.languageEN);
   const bgColor = useSelector((state) => state.changeBgColor);
   const isLogIn = useSelector((state) => state.isLogIn);
@@ -86,7 +87,7 @@ const Header = () => {
                 />
               </Nav.Link>
             )}
-          {/* đang gặp lỗi thẻ a lồng nhau ở header */}
+            {/* đang gặp lỗi thẻ a lồng nhau ở header */}
             <Nav.Link>
               <Link to="/home/help" className="text-decoration-none">
                 {languageEN ? "Help" : "Trợ giúp"}
@@ -107,7 +108,7 @@ const Header = () => {
             <Nav.Link>
               {isLogIn ? (
                 <NavDropdown
-                  title="thuan@gmail.com"
+                  title={email.email}
                   id="collapsible-nav-dropdown"
                   className="text-decoration-none text_color"
                 >

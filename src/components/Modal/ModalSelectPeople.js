@@ -12,13 +12,14 @@ function ModalSelectPeople(props) {
     numberOfAdults,
     numberOfChildren,
     selectedOption,
+    title,
   } = props;
   const [listTravelersCabin, setListTravelersCabin] = useState({
     cabin: "",
     adult: "",
     children: "",
   });
-
+  const [newTitle, setNewTitle] = useState("");
   const handleOnChange = (type, event) => {
     setListTravelersCabin({
       ...listTravelersCabin,
@@ -26,12 +27,22 @@ function ModalSelectPeople(props) {
     });
   };
   const handleConfirm = () => {
+    if (newTitle === "Khứ hồi") {
+      setListTravelersCabin({
+        cabin: "",
+        adult: "",
+        children: "",
+      });
+      handleUpdate(newTitle, listTravelersCabin);
+      handle();
+      return;
+    }
     setListTravelersCabin({
       cabin: "",
       adult: "",
       children: "",
     });
-    handleUpdate(listTravelersCabin);
+    handleUpdate(newTitle, listTravelersCabin);
     handle();
   };
 
@@ -46,6 +57,10 @@ function ModalSelectPeople(props) {
       children: numberOfChildren,
     });
   }, [numberOfAdults]);
+  useEffect(() => {
+    setNewTitle(title);
+  }, [title]);
+  console.log(">> check title modal", title);
   return (
     <>
       <Modal show={show} onHide={handle}>

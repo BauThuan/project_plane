@@ -56,3 +56,17 @@ export const ManyCities = (data) => {
     payload: data,
   };
 };
+
+export const isRegister = (data) => {
+  return {
+    type: "isRegister",
+    payload: data,
+  };
+};
+
+export const isTitle = (data) => {
+  return {
+    type: "isTitle",
+    payload: data,
+  };
+};
