@@ -19,13 +19,28 @@
         border-bottom: 1px solid #ccc;
         padding: 20px 0px;
         cursor: pointer;
+        position: relative;
         .icon_text {
           font-size: 1rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
+
           .margin_icon {
             margin-right: 10px;
+          }
+          .text_notification {
+            top: 14px;
+            left: 5px;
+            position: absolute;
+            background-color: red;
+            color: #ffffff;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
           }
         }
         div {

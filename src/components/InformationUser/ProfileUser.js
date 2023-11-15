@@ -22,6 +22,7 @@ const ProfileUser = () => {
   const profile = useSelector((state) => state.listProfile);
   const planeFlight = useSelector((state) => state.listOfRoundTrip);
   const languageEN = useSelector((state) => state.languageEN);
+  const [showNotiofication, setShowNotification] = useState(true);
   const [isShowModalEditProfile, setIsShowModalEditProfile] = useState(false);
   const [isShowModalDeleteAccount, setIsShowModalDeleteAccount] =
     useState(false);
@@ -46,6 +47,7 @@ const ProfileUser = () => {
   const handleShowOptionSelect = (type) => {
     if (type === "Tài khoản" || type === "Thông báo" || type === "Lịch sử") {
       setShowOption(type);
+      setShowNotification(false);
     }
   };
 
@@ -59,7 +61,7 @@ const ProfileUser = () => {
 
   useEffect(() => {
     setListPlaneFlight([...listPlaneFlight, planeFlight]);
-  }, []);
+  }, [planeFlight]);
   return (
     <>
       <Helmet>
@@ -101,6 +103,19 @@ const ProfileUser = () => {
             >
               <div className="icon_text">
                 <IoNotificationsSharp className="margin_icon" />
+                {listPlaneFlight.length > 0 ? (
+                  <>
+                    {showNotiofication === true ? (
+                      <div className="text_notification">
+                        {listPlaneFlight.length}
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </>
+                ) : (
+                  ""
+                )}
                 {languageEN ? "Notification" : "Thông báo"}
               </div>
               <div>
@@ -232,7 +247,7 @@ const ProfileUser = () => {
             )}
             {showOption === "Thông báo" && (
               <div>
-                <h1>{languageEN ? "Notifical" : "Thông báo"}</h1>
+                <h1>{languageEN ? "Notification" : "Thông báo"}</h1>
                 <Accordion defaultActiveKey="0" className="z-n1">
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>
