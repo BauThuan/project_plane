@@ -5,6 +5,7 @@ const initState = {
   listOfRoundTrip: [],
   listOfOneWay: [],
   listOfManyCities: [],
+  listProfile: [],
   listLogin: {},
   newTitle: "",
 };
@@ -81,6 +82,20 @@ const rootReducer = (state = initState, action) => {
         ...state,
         newTitle: action.payload,
       };
+    case "isProfile":
+      return {
+        ...state,
+        listProfile: {
+          ...state.listProfile,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          birthday: action.payload.birthday,
+          address: action.payload.address,
+          phone: action.payload.phone,
+          identification: action.payload.identification,
+        },
+      };
+
     default:
       return state;
   }

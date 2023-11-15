@@ -2,49 +2,32 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { isProfile } from "../Redux/Action";
 function ModalEditProfile(props) {
   const languageEN = useSelector((state) => state.languageEN);
-  const {
-    show,
-    handle,
-    handleUpdate,
-    numberOfAdults,
-    numberOfChildren,
-    selectedOption,
-  } = props;
-  const [listTravelersCabin, setListTravelersCabin] = useState({
-    cabin: "",
-    adult: "",
-    children: "",
+  const dispatch = useDispatch();
+  const { show, handle, handleUpdate } = props;
+  const [profileUser, setProfileUser] = useState({
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    address: "",
+    phone: "",
+    identification: "",
   });
 
   const handleOnChange = (type, event) => {
-    setListTravelersCabin({
-      ...listTravelersCabin,
-      [type]: event.target.value,
-    });
+    setProfileUser({ ...profileUser, [type]: event.target.value });
   };
   const handleConfirm = () => {
-    setListTravelersCabin({
-      cabin: "",
-      adult: "",
-      children: "",
-    });
-    handleUpdate(listTravelersCabin);
+    dispatch(isProfile(profileUser));
     handle();
   };
 
   const handleCloseModal = () => {
     handle();
   };
-
-  useEffect(() => {
-    setListTravelersCabin({
-      cabin: selectedOption,
-      adult: numberOfAdults,
-      children: numberOfChildren,
-    });
-  }, [numberOfAdults]);
   return (
     <>
       <Modal show={show} onHide={handle}>
@@ -61,7 +44,7 @@ function ModalEditProfile(props) {
               <div className="modal_describe col-6">
                 <label>{languageEN ? "First name" : "Tên"}</label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("firstName", e)}
                   className="form-control"
                   type="text"
                 />
@@ -69,31 +52,24 @@ function ModalEditProfile(props) {
               <div className="col-6">
                 <label>{languageEN ? "Last name" : "Họ"}</label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("lastName", e)}
                   className="form-control"
                   type="text"
                 />
               </div>
-              <div className="col-6 mt-3">
-                <label>{languageEN ? "Email" : "Hộp thư cá nhân"}</label>
-                <input
-                  onChange={(e) => handleOnChange("", e)}
-                  className="form-control"
-                  type="text"
-                />
-              </div>
+
               <div className="col-6 mt-3">
                 <label>{languageEN ? "Birthday" : "Ngày tháng năm sinh"}</label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("birthday", e)}
                   className="form-control"
                   type="text"
                 />
               </div>
-              <div className="col-12 mt-3">
+              <div className="col-6 mt-3">
                 <label>{languageEN ? "Address" : "Địa chỉ"}</label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("address", e)}
                   className="form-control"
                   type="text"
                 />
@@ -101,7 +77,7 @@ function ModalEditProfile(props) {
               <div className="col-6 mt-3">
                 <label>{languageEN ? "Phone" : "Số điện thoại"}</label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("phone", e)}
                   className="form-control"
                   type="text"
                 />
@@ -111,7 +87,7 @@ function ModalEditProfile(props) {
                   {languageEN ? "Identification" : "Căn cước công dân"}
                 </label>
                 <input
-                  onChange={(e) => handleOnChange("", e)}
+                  onChange={(e) => handleOnChange("identification", e)}
                   className="form-control"
                   type="text"
                 />

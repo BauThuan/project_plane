@@ -70,3 +70,10 @@ export const isTitle = (data) => {
     payload: data,
   };
 };
+
+export const isProfile = (data) => {
+  return {
+    type: "isProfile",
+    payload: data,
+  };
+};
