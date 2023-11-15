@@ -21,6 +21,7 @@ const Flight = () => {
   const navigate = useNavigate();
   const languageEN = useSelector((state) => state.languageEN);
   const listPlaneFlight = useSelector((state) => state.listOfRoundTrip);
+  const profile = useSelector((state) => state.listProfile);
   console.log(
     ">>> checl list round trip mot ngayf chi cos ther di 1 chuye",
     listPlaneFlight
@@ -264,161 +265,177 @@ const Flight = () => {
     });
   };
 
+  console.log(">>> check profile", profile);
+
   const handleSearchRoundWay = (type) => {
     if (listPlaneFlight.length <= 0) {
-      if (type === "Khứ hồi") {
-        let { addressStart, addressEnd, startTime, endTime, adult, children } =
-          listRoundTrip;
-        let currentDate = new Date();
-        let selectedDateStart = new Date(startTime);
-        let selectedDateEnd = new Date(endTime);
-        if (!addressStart.trim()) {
-          toast.error(
-            languageEN
-              ? "Please choose your starting point again!"
-              : "Vui lòng chọn lại điểm bắt đầu !"
-          );
-          return;
-        }
-        if (!addressEnd.trim()) {
-          toast.error(
-            languageEN
-              ? "Please select the ending point again!"
-              : "Vui lòng chọn lại điểm kết thúc !"
-          );
-          return;
-        }
-        if (!startTime.trim()) {
-          toast.error(
-            languageEN
-              ? "Please select a start time!"
-              : "Vui lòng chọn thời gian bắt đầu !"
-          );
-          return;
-        }
-        // đang có vấn đề về so sánh ngày giống nhau
-        if (selectedDateStart <= currentDate) {
-          toast.error(
-            languageEN
-              ? "Departure date must be greater than current date!"
-              : "Ngày khởi hành phải lớn hơn ngày hiện tại !"
-          );
-          return;
-        }
+      if (profile.length <= 0) {
+        toast.error(
+          languageEN
+            ? "You need to update your personal information before registering for a flight!"
+            : "Bạn cần cập nhật thông tin cá nhân rồi mới đăng ký được chuyến bay !"
+        );
+      } else {
+        if (type === "Khứ hồi") {
+          let {
+            addressStart,
+            addressEnd,
+            startTime,
+            endTime,
+            adult,
+            children,
+          } = listRoundTrip;
+          let currentDate = new Date();
+          let selectedDateStart = new Date(startTime);
+          let selectedDateEnd = new Date(endTime);
+          if (!addressStart.trim()) {
+            toast.error(
+              languageEN
+                ? "Please choose your starting point again!"
+                : "Vui lòng chọn lại điểm bắt đầu !"
+            );
+            return;
+          }
+          if (!addressEnd.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select the ending point again!"
+                : "Vui lòng chọn lại điểm kết thúc !"
+            );
+            return;
+          }
+          if (!startTime.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select a start time!"
+                : "Vui lòng chọn thời gian bắt đầu !"
+            );
+            return;
+          }
+          // đang có vấn đề về so sánh ngày giống nhau
+          if (selectedDateStart <= currentDate) {
+            toast.error(
+              languageEN
+                ? "Departure date must be greater than current date!"
+                : "Ngày khởi hành phải lớn hơn ngày hiện tại !"
+            );
+            return;
+          }
 
-        if (!endTime.trim()) {
-          toast.error(
+          if (!endTime.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select an end time!"
+                : "Vui lòng chọn thời gian kết thúc !"
+            );
+            return;
+          }
+          // đang có vấn đề về so sánh giống nhau
+          if (selectedDateEnd < currentDate) {
+            toast.error(
+              languageEN
+                ? "The end date must be greater than the current date!"
+                : "Ngày kết thúc phải lớn hơn ngày hiện tại !"
+            );
+            return;
+          }
+          if (selectedDateEnd < selectedDateStart) {
+            toast.error(
+              languageEN
+                ? "The ending date is smaller than the starting date!"
+                : "Ngày kết thúc nhỏ hơn ngày bắt đầu !"
+            );
+            return;
+          }
+          if (addressStart === addressEnd) {
+            toast.error(
+              languageEN
+                ? "The departure point must be different from the destination!"
+                : "Điểm đi phải khác điểm đến !"
+            );
+            return;
+          }
+          if (adult === 0 || children === 0) {
+            toast.error(
+              languageEN
+                ? "Please select all travelers and cabin class!"
+                : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
+            );
+            return;
+          }
+          toast.success(
             languageEN
-              ? "Please select an end time!"
-              : "Vui lòng chọn thời gian kết thúc !"
+              ? "Choose a successful location!"
+              : "Chọn địa điểm thành công !"
           );
-          return;
+          setTitle(type);
+          dispatch(RoundTrip(listRoundTrip));
+          dispatch(isTitle(type));
+          navigate("/home/list-of-flight");
         }
-        // đang có vấn đề về so sánh giống nhau
-        if (selectedDateEnd < currentDate) {
-          toast.error(
+        if (type === "Một chiều") {
+          let { addressStart, addressEnd, startTime, adult, children } =
+            listOneWay;
+          let starTimeDate = new Date(startTime);
+          let realTime = new Date();
+          if (!addressStart.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select your starting location again!"
+                : "Vui lòng chọn lại địa điểm xuất phát !"
+            );
+            return;
+          }
+          if (!addressEnd.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select the starting location again!"
+                : "Vui lòng chọn lại địa điểm bắt đầu !"
+            );
+            return;
+          }
+          if (!startTime.trim()) {
+            toast.error(
+              languageEN
+                ? "Please select a start time!"
+                : "Vui lòng chọn thời gian bắt đầu !"
+            );
+            return;
+          }
+          if (starTimeDate < realTime) {
+            toast.error(
+              languageEN
+                ? "Departure date must be greater than real time!"
+                : "Ngày khởi hành phải lớn hơn thời gian thực !"
+            );
+            return;
+          }
+          if (adult === 0 || children === 0) {
+            toast.error(
+              languageEN
+                ? "Please select all travelers and cabin class!"
+                : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
+            );
+            return;
+          }
+          if (addressStart === addressEnd) {
+            toast.error(
+              languageEN
+                ? "The departure point must be different from the destination!"
+                : "Điểm đi phải khác điểm đến !"
+            );
+            return;
+          }
+          toast.success(
             languageEN
-              ? "The end date must be greater than the current date!"
-              : "Ngày kết thúc phải lớn hơn ngày hiện tại !"
+              ? "Choose a successful location!"
+              : "Chọn địa điểm thành công !"
           );
-          return;
+          setTitle(type);
+          dispatch(OneWay(listOneWay));
+          dispatch(isTitle(type));
+          navigate("/home/list-of-flight");
         }
-        if (selectedDateEnd < selectedDateStart) {
-          toast.error(
-            languageEN
-              ? "The ending date is smaller than the starting date!"
-              : "Ngày kết thúc nhỏ hơn ngày bắt đầu !"
-          );
-          return;
-        }
-        if (addressStart === addressEnd) {
-          toast.error(
-            languageEN
-              ? "The departure point must be different from the destination!"
-              : "Điểm đi phải khác điểm đến !"
-          );
-          return;
-        }
-        if (adult === 0 || children === 0) {
-          toast.error(
-            languageEN
-              ? "Please select all travelers and cabin class!"
-              : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
-          );
-          return;
-        }
-        toast.success(
-          languageEN
-            ? "Choose a successful location!"
-            : "Chọn địa điểm thành công !"
-        );
-        setTitle(type);
-        dispatch(RoundTrip(listRoundTrip));
-        dispatch(isTitle(type));
-        navigate("/home/list-of-flight");
-      }
-      if (type === "Một chiều") {
-        let { addressStart, addressEnd, startTime, adult, children } =
-          listOneWay;
-        let starTimeDate = new Date(startTime);
-        let realTime = new Date();
-        if (!addressStart.trim()) {
-          toast.error(
-            languageEN
-              ? "Please select your starting location again!"
-              : "Vui lòng chọn lại địa điểm xuất phát !"
-          );
-          return;
-        }
-        if (!addressEnd.trim()) {
-          toast.error(
-            languageEN
-              ? "Please select the starting location again!"
-              : "Vui lòng chọn lại địa điểm bắt đầu !"
-          );
-          return;
-        }
-        if (!startTime.trim()) {
-          toast.error(
-            languageEN
-              ? "Please select a start time!"
-              : "Vui lòng chọn thời gian bắt đầu !"
-          );
-          return;
-        }
-        if (starTimeDate < realTime) {
-          toast.error(
-            languageEN
-              ? "Departure date must be greater than real time!"
-              : "Ngày khởi hành phải lớn hơn thời gian thực !"
-          );
-          return;
-        }
-        if (adult === 0 || children === 0) {
-          toast.error(
-            languageEN
-              ? "Please select all travelers and cabin class!"
-              : "Vui lòng chọn đầy đủ Du khách và hạng khoang !"
-          );
-          return;
-        }
-        if (addressStart === addressEnd) {
-          toast.error(
-            languageEN
-              ? "The departure point must be different from the destination!"
-              : "Điểm đi phải khác điểm đến !"
-          );
-          return;
-        }
-        toast.success(
-          languageEN
-            ? "Choose a successful location!"
-            : "Chọn địa điểm thành công !"
-        );
-        setTitle(type);
-        dispatch(OneWay(listOneWay));
-        dispatch(isTitle(type));
-        navigate("/home/list-of-flight");
       }
     } else {
       if (type === "Khứ hồi") {

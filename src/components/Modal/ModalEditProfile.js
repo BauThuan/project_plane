@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { isProfile } from "../Redux/Action";
+import { toast } from "react-toastify";
+
 function ModalEditProfile(props) {
   const languageEN = useSelector((state) => state.languageEN);
   const dispatch = useDispatch();
@@ -22,6 +24,9 @@ function ModalEditProfile(props) {
   };
   const handleConfirm = () => {
     dispatch(isProfile(profileUser));
+    toast.success(
+      languageEN ? "Successfully updated !" : "Cập nhật thông tin thành công !"
+    );
     handle();
   };
 
