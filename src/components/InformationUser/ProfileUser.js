@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCircleUser, FaChevronRight } from "react-icons/fa6";
 import { FaHistory } from "react-icons/fa";
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -19,11 +19,14 @@ const ProfileUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const email = useSelector((state) => state.listLogin);
+  const profile = useSelector((state) => state.listProfile);
+  const planeFlight = useSelector((state) => state.listOfRoundTrip);
   const languageEN = useSelector((state) => state.languageEN);
   const [isShowModalEditProfile, setIsShowModalEditProfile] = useState(false);
   const [isShowModalDeleteAccount, setIsShowModalDeleteAccount] =
     useState(false);
   const [showOption, setShowOption] = useState("Tài khoản");
+  const [listPlaneFlight, setListPlaneFlight] = useState([]);
   const handleLogOut = () => {
     toast.success(
       languageEN ? "Successfully logged out!" : "Đăng xuất thành công !"
@@ -53,6 +56,10 @@ const ProfileUser = () => {
   const handleShowModalDeleteAccount = () => {
     setIsShowModalDeleteAccount(true);
   };
+
+  useEffect(() => {
+    setListPlaneFlight([...listPlaneFlight, planeFlight]);
+  }, []);
   return (
     <>
       <Helmet>
@@ -114,13 +121,29 @@ const ProfileUser = () => {
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Email: {email.email}</Accordion.Header>
                     <Accordion.Body className="information_user">
-                      <p>{languageEN ? "First name" : "Tên"}:</p>
-                      <p>{languageEN ? "Last name" : "Họ"}:</p>
-                      <p>{languageEN ? "Birthday" : "Ngày tháng năm sinh"}:</p>
-                      <p>{languageEN ? "Address" : "Địa chỉ"}:</p>
-                      <p>{languageEN ? "Phone" : "Số điện thoại"}:</p>
                       <p>
-                        {languageEN ? "Identification" : "Căn cước công dân"}:
+                        {languageEN ? "First name" : "Tên"}:{" "}
+                        <b>{profile.firstName}</b>
+                      </p>
+                      <p>
+                        {languageEN ? "Last name" : "Họ"}:{" "}
+                        <b>{profile.lastName}</b>
+                      </p>
+                      <p>
+                        {languageEN ? "Birthday" : "Ngày tháng năm sinh"}:{" "}
+                        <b>{profile.birthday}</b>
+                      </p>
+                      <p>
+                        {languageEN ? "Address" : "Địa chỉ"}:{" "}
+                        <b>{profile.address}</b>
+                      </p>
+                      <p>
+                        {languageEN ? "Phone" : "Số điện thoại"}:{" "}
+                        <b>{profile.phone}</b>
+                      </p>
+                      <p>
+                        {languageEN ? "Identification" : "Căn cước công dân"}:{" "}
+                        <b>{profile.identification}</b>
                       </p>
                       <button onClick={handleShowModalEditProfile}>
                         {" "}
@@ -148,42 +171,60 @@ const ProfileUser = () => {
                         : "Lịch sử mua vé"}
                     </Accordion.Header>
                     <Accordion.Body className="information_user">
-                      <Table striped bordered hover>
-                        <thead>
-                          <tr>
-                            <th>{languageEN ? "ID" : "STT"}</th>
-                            <th>{languageEN ? "Airline" : "Hãng bay"}</th>
-                            <th>{languageEN ? "Flight" : "Chuyến bay"}</th>
-                            <th>
-                              {languageEN ? "Cabin class" : "Hạng khoang"}
-                            </th>
-                            <th>
-                              {languageEN ? "Start time" : "Thời gian bắt đầu"}
-                            </th>
-                            <th>
-                              {languageEN ? "End time" : "Thời gian kết thúc"}
-                            </th>
-                            <th>{languageEN ? "Start day" : "Ngày bắt đầu"}</th>
-                            <th>
-                              {languageEN ? "Flight time" : "Thời gian bay"}
-                            </th>
-                            <th>{languageEN ? "Expense" : "Chi phí"}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Vietjet</td>
-                            <td>Khứ hồi</td>
-                            <td>Phổ thông</td>
-                            <td>17:00</td>
-                            <td>19:00</td>
-                            <td>23/11/2023</td>
-                            <td>2h</td>
-                            <td>980.000đ</td>
-                          </tr>
-                        </tbody>
-                      </Table>
+                      {listPlaneFlight.length > 0 ? (
+                        <>
+                          <Table striped bordered hover>
+                            <thead>
+                              <tr>
+                                <th>{languageEN ? "Airline" : "Hãng bay"}</th>
+                                <th>
+                                  {languageEN
+                                    ? "Starting location"
+                                    : "Địa điểm bắt đầu"}
+                                </th>
+                                <th>
+                                  {languageEN
+                                    ? "End location"
+                                    : "Địa điểm kết thúc"}
+                                </th>
+                                <th>
+                                  {languageEN ? "Cabin class" : "Hạng khoang"}
+                                </th>
+                                <th>
+                                  {languageEN ? "Start day" : "Ngày bắt đầu"}
+                                </th>
+                                <th>
+                                  {languageEN
+                                    ? "Total flight time"
+                                    : "Tổng thời gian bay"}
+                                </th>
+                                <th>{languageEN ? "Expense" : "Chi phí"}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {listPlaneFlight.map((item, index) => {
+                                return (
+                                  <tr key={`index ${index}`}>
+                                    <td>Vietjet</td>
+                                    <td>{item.addressStart}</td>
+                                    <td>{item.addressEnd}</td>
+                                    <td>{item.cabin}</td>
+                                    <td>{item.startTime}</td>
+                                    <td>2h</td>
+                                    <td>980.000đ</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </Table>
+                        </>
+                      ) : (
+                        <div style={{ fontSize: "16px" }}>
+                          {languageEN
+                            ? "No purchase history !"
+                            : "Không có lịch sử mua hàng !"}
+                        </div>
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
@@ -191,48 +232,44 @@ const ProfileUser = () => {
             )}
             {showOption === "Thông báo" && (
               <div>
+                <h1>{languageEN ? "Notifical" : "Thông báo"}</h1>
                 <Accordion defaultActiveKey="0" className="z-n1">
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>
                       {languageEN ? "Notification" : "Thông báo"}
                     </Accordion.Header>
                     <Accordion.Body className="information_user">
-                      <Table striped bordered hover>
-                        <thead>
-                          <tr>
-                            <th>{languageEN ? "ID" : "STT"}</th>
-                            <th>{languageEN ? "Airline" : "Hãng bay"}</th>
-                            <th>{languageEN ? "Flight" : "Chuyến bay"}</th>
-                            <th>
-                              {languageEN ? "Cabin class" : "Hạng khoang"}
-                            </th>
-                            <th>
-                              {languageEN ? "Start time" : "Thời gian bắt đầu"}
-                            </th>
-                            <th>
-                              {languageEN ? "End time" : "Thời gian kết thúc"}
-                            </th>
-                            <th>{languageEN ? "Start day" : "Ngày bắt đầu"}</th>
-                            <th>
-                              {languageEN ? "Flight time" : "Thời gian bay"}
-                            </th>
-                            <th>{languageEN ? "Expense" : "Chi phí"}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Vietjet</td>
-                            <td>Khứ hồi</td>
-                            <td>Phổ thông</td>
-                            <td>17:00</td>
-                            <td>19:00</td>
-                            <td>23/11/2023</td>
-                            <td>2h</td>
-                            <td>980.000đ</td>
-                          </tr>
-                        </tbody>
-                      </Table>
+                      {planeFlight ? (
+                        <div>
+                          <p
+                            style={{
+                              border: "1px solid #ccc",
+                              padding: "10px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            {languageEN ? (
+                              <div>
+                                You purchased a <b>{planeFlight.cabin}</b>{" "}
+                                ticket from <b>{planeFlight.addressStart}</b> to{" "}
+                                <b>{planeFlight.addressEnd}</b> successful
+                              </div>
+                            ) : (
+                              <div>
+                                Bạn đã mua vé <b>{planeFlight.cabin}</b> từ {""}
+                                <b>{planeFlight.addressStart}</b> đến {""}
+                                <b>{planeFlight.addressEnd}</b> thành công
+                              </div>
+                            )}
+                          </p>
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: "16px" }}>
+                          {languageEN
+                            ? "There are no announcements!"
+                            : "Không có thông báo nào !"}
+                        </div>
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>

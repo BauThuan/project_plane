@@ -28,6 +28,8 @@ function ModalEditProfile(props) {
   const handleCloseModal = () => {
     handle();
   };
+
+  console.log(">>> check setProfile", profileUser);
   return (
     <>
       <Modal show={show} onHide={handle}>
@@ -63,7 +65,7 @@ function ModalEditProfile(props) {
                 <input
                   onChange={(e) => handleOnChange("birthday", e)}
                   className="form-control"
-                  type="text"
+                  type="date"
                 />
               </div>
               <div className="col-6 mt-3">
