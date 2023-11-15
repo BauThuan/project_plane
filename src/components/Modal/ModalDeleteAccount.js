@@ -2,9 +2,21 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { toast } from "react-toastify";
+
 function ModalDeleteAccount(props) {
   const languageEN = useSelector((state) => state.languageEN);
-  const { show, title, handle } = props;
+  const email = useSelector((state) => state.listLogin);
+  const { show, handle } = props;
+
+  const handleConFirm = () => {
+    window.location.reload();
+    toast.success(
+      languageEN
+        ? "Account deleted successfully!"
+        : "Xóa tài khoản thành công !"
+    );
+  };
   return (
     <>
       <Modal show={show} onHide={handle}>
@@ -17,9 +29,16 @@ function ModalDeleteAccount(props) {
           <div className="container">
             <div className="row">
               <p>
-                {languageEN
-                  ? `Do you agree to delete this ${title} account?`
-                  : `Bạn có đồng ý muốn xóa tài khoản ${title} này không ?`}
+                {languageEN ? (
+                  <div>
+                    Do you agree to delete this <b>{email.email}</b> account ?
+                  </div>
+                ) : (
+                  <div>
+                    Bạn có đồng ý muốn xóa tài khoản <b>{email.email}</b> này
+                    không ?
+                  </div>
+                )}
               </p>
             </div>
           </div>
@@ -28,7 +47,9 @@ function ModalDeleteAccount(props) {
           <Button variant="secondary" onClick={handle}>
             Close
           </Button>
-          <Button variant="primary">Save</Button>
+          <Button onClick={handleConFirm} variant="primary">
+            Save
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
