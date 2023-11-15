@@ -103,7 +103,7 @@ const ProfileUser = () => {
             >
               <div className="icon_text">
                 <IoNotificationsSharp className="margin_icon" />
-                {listPlaneFlight.length > 0 ? (
+                {planeFlight.cabin ? (
                   <>
                     {showNotiofication === true ? (
                       <div className="text_notification">
@@ -254,7 +254,7 @@ const ProfileUser = () => {
                       {languageEN ? "Notification" : "Thông báo"}
                     </Accordion.Header>
                     <Accordion.Body className="information_user">
-                      {planeFlight ? (
+                      {planeFlight.cabin ? (
                         <div>
                           <p
                             style={{
