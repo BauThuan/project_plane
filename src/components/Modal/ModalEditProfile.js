@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 function ModalEditProfile(props) {
   const languageEN = useSelector((state) => state.languageEN);
   const dispatch = useDispatch();
-  const { show, handle, handleUpdate } = props;
+  const { show, handle } = props;
   const [profileUser, setProfileUser] = useState({
     firstName: "",
     lastName: "",
@@ -33,8 +33,6 @@ function ModalEditProfile(props) {
   const handleCloseModal = () => {
     handle();
   };
-
-  console.log(">>> check setProfile", profileUser);
   return (
     <>
       <Modal show={show} onHide={handle}>

@@ -248,7 +248,6 @@ const Flight = () => {
   };
 
   const handleUpdateListTraveler = (type, listData) => {
-    console.log(">>> check type handleUpdateListTraveler", type);
     if (type === "Khứ hồi") {
       setListRoundTrip({
         ...listRoundTrip,
@@ -264,9 +263,6 @@ const Flight = () => {
       cabin: listData.cabin,
     });
   };
-
-  console.log(">>> check profile", profile);
-
   const handleSearchRoundWay = (type) => {
     if (listPlaneFlight.length <= 0) {
       if (profile.length <= 0) {
@@ -497,6 +493,7 @@ const Flight = () => {
       setSelectedOption("Phổ thông");
     }
   }, [listAddNewPlane]);
+  console.log(">>> check data", listAddNewPlane);
   return (
     <div className="flight_container">
       <div className="flight_container--content">

@@ -2,11 +2,35 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { toast } from "react-toastify";
 function ModalSearchHelp(props) {
   const languageEN = useSelector((state) => state.languageEN);
   const { show, title, handle } = props;
   const [emailContact, setEmailContact] = useState("");
-  const handleOnChange = (type, event) => {};
+  const handleConfirm = () => {
+    if (!emailContact.trim()) {
+      toast.error(
+        languageEN
+          ? "You need to enter enough email information !"
+          : "Bạn cần phải nhập đầy đủ thông tin email !"
+      );
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailContact.trim())) {
+      toast.error(
+        languageEN
+          ? "Email format is not correct!"
+          : "Định dạng email chưa đúng !"
+      );
+      return;
+    }
+    toast.success(
+      languageEN
+        ? "Information about the problem you encountered has been received!"
+        : "Thông tin vè sự cố mà bạn gặp phải đã được tiếp nhận !"
+    );
+    handle();
+  };
   return (
     <>
       <Modal size="lg" show={show} onHide={handle}>
@@ -41,7 +65,12 @@ function ModalSearchHelp(props) {
                     ? "Enter your personal email address"
                     : "Nhập địa chỉ email cá nhân của bạn"}
                 </label>
-                <input className="form-control" type="text" />
+                <input
+                  className="form-control"
+                  type="text"
+                  value={emailContact}
+                  onChange={(event) => setEmailContact(event.target.value)}
+                />
               </div>
               <p>
                 {languageEN
@@ -59,6 +88,9 @@ function ModalSearchHelp(props) {
         <Modal.Footer>
           <Button variant="secondary" onClick={handle}>
             Close
+          </Button>
+          <Button variant="primary" onClick={handleConfirm}>
+            save
           </Button>
         </Modal.Footer>
       </Modal>
