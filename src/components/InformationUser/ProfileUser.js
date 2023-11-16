@@ -20,7 +20,9 @@ const ProfileUser = () => {
   const navigate = useNavigate();
   const email = useSelector((state) => state.listLogin);
   const profile = useSelector((state) => state.listProfile);
+  const title = useSelector((state) => state.newTitle);
   const planeFlight = useSelector((state) => state.listOfRoundTrip);
+  const planeFlightOneWay = useSelector((state) => state.listOfOneWay);
   const languageEN = useSelector((state) => state.languageEN);
   const [showNotiofication, setShowNotification] = useState(true);
   const [isShowModalEditProfile, setIsShowModalEditProfile] = useState(false);
@@ -60,8 +62,13 @@ const ProfileUser = () => {
   };
 
   useEffect(() => {
-    setListPlaneFlight([...listPlaneFlight, planeFlight]);
-  }, [planeFlight]);
+    if (title === "Khứ hồi") {
+      setListPlaneFlight([...listPlaneFlight, planeFlight]);
+    }
+    if (title === "Một chiều") {
+      setListPlaneFlight([...listPlaneFlight, planeFlightOneWay]);
+    }
+  }, [title]);
   return (
     <>
       <Helmet>
@@ -226,7 +233,7 @@ const ProfileUser = () => {
                                     <td>{item.cabin}</td>
                                     <td>{item.startTime}</td>
                                     <td>2h</td>
-                                    <td>980.000đ</td>
+                                    <td>1.000.000đ</td>
                                   </tr>
                                 );
                               })}
@@ -254,29 +261,33 @@ const ProfileUser = () => {
                       {languageEN ? "Notification" : "Thông báo"}
                     </Accordion.Header>
                     <Accordion.Body className="information_user">
-                      {planeFlight.cabin ? (
+                      {listPlaneFlight.length > 0 ? (
                         <div>
-                          <p
-                            style={{
-                              border: "1px solid #ccc",
-                              padding: "10px",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            {languageEN ? (
-                              <div>
-                                You purchased a <b>{planeFlight.cabin}</b>{" "}
-                                ticket from <b>{planeFlight.addressStart}</b> to{" "}
-                                <b>{planeFlight.addressEnd}</b> successful
-                              </div>
-                            ) : (
-                              <div>
-                                Bạn đã mua vé <b>{planeFlight.cabin}</b> từ {""}
-                                <b>{planeFlight.addressStart}</b> đến {""}
-                                <b>{planeFlight.addressEnd}</b> thành công
-                              </div>
-                            )}
-                          </p>
+                          {listPlaneFlight.map((item, index) => {
+                            return (
+                              <p
+                                style={{
+                                  border: "1px solid #ccc",
+                                  padding: "10px",
+                                  borderRadius: "10px",
+                                }}
+                              >
+                                {languageEN ? (
+                                  <div>
+                                    You purchased a <b>{item.cabin}</b> ticket
+                                    from <b>{item.addressStart}</b> to{" "}
+                                    <b>{item.addressEnd}</b> successful
+                                  </div>
+                                ) : (
+                                  <div>
+                                    Bạn đã mua vé <b>{item.cabin}</b> từ {""}
+                                    <b>{item.addressStart}</b> đến {""}
+                                    <b>{item.addressEnd}</b> thành công
+                                  </div>
+                                )}
+                              </p>
+                            );
+                          })}
                         </div>
                       ) : (
                         <div style={{ fontSize: "16px" }}>
